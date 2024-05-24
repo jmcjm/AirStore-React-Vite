@@ -1,7 +1,7 @@
-function LandingPage() {
+function AirPhone() {
     return (
-        <div className=".container-fluid">czesc1</div>
+        <div className=".container-fluid">czesc2</div>
     );
 }
 
-export default LandingPage;  
+export default AirPhone;  

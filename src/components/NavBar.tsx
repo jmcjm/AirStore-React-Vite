@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import ReactSvg from '../assets/react.svg';
-
+import { Link } from "react-router-dom"; 
+import { NavbarContext } from '../NavbarContext';
 function NavBar() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
@@ -15,13 +16,14 @@ function NavBar() {
     // Logika rejestracji
     setShowSignUpModal(false);
   };
-
-  return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+  const { navbarHeight } = useContext(NavbarContext);
+  
+    return (
+    <nav id="navbar" className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
       <div className="container-fluid">
-        <a className="navbar-brand me-2" href="#">
+        <Link to="/" className="navbar-brand me-2">
           <img src={ReactSvg} height="16" alt="Logo" loading="lazy" /> AirShop
-        </a>
+        </Link>
 
         <button
           data-mdb-collapse-init
@@ -38,19 +40,19 @@ function NavBar() {
         <div className="collapse navbar-collapse" id="navbarButtonsExample">
           <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
             <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link to="/airphone" className="nav-link text-decoration-none">
                 AirPhone
-              </a>
+              </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#">
-                AirGlass
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
+              <Link to="/airtab" className="nav-link text-decoration-none">
                 AirTab
-              </a>
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/airglass" className="nav-link text-decoration-none">
+                AirGlass
+              </Link>
             </li>
           </ul>
 
