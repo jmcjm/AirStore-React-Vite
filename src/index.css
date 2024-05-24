@@ -1,4 +1,21 @@
+/* Navbar CSS */
+.navbar-collapse {
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
+}
+.navbar-collapse.show {
+    height: auto;
+}
+
+/* LandingPage CSS */
+.main-banner {
+    height: 47%;
+}
 .header-text {
     font-size: 100px;
     font-weight: 500;
+}
+.ads-banner {
+    background-color: rgba(0,0,0,0.5);
+    height: 51%;
 }

@@ -3,22 +3,29 @@ import { Modal, Button } from 'react-bootstrap';
 import ReactSvg from '../assets/react.svg';
 import { Link } from "react-router-dom"; 
 import { NavbarContext } from '../NavbarContext';
+import '../index.css';
+
 function NavBar() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const { navbarHeight } = useContext(NavbarContext);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleLogin = () => {
-    // Logika logowania
+    // Handle login logic
     setShowLoginModal(false);
   };
 
   const handleSignUp = () => {
-    // Logika rejestracji
+    // Handle sign up logic
     setShowSignUpModal(false);
   };
-  const { navbarHeight } = useContext(NavbarContext);
-  
-    return (
+
+  return (
     <nav id="navbar" className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
       <div className="container-fluid">
         <Link to="/" className="navbar-brand me-2">
@@ -26,31 +33,30 @@ function NavBar() {
         </Link>
 
         <button
-          data-mdb-collapse-init
           className="navbar-toggler"
           type="button"
-          data-mdb-target="#navbarButtonsExample"
-          aria-controls="navbarButtonsExample"
-          aria-expanded="false"
+          aria-controls="navbarNav"
+          aria-expanded={isOpen ? 'true' : 'false'}
           aria-label="Toggle navigation"
+          onClick={toggleMenu}
         >
-          <i className="fas fa-bars"></i>
+          <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarButtonsExample">
+        <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
           <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
             <li className="nav-item">
-              <Link to="/airphone" className="nav-link text-decoration-none">
+              <Link to="/airphone" className="nav-link">
                 AirPhone
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/airtab" className="nav-link text-decoration-none">
+              <Link to="/airtab" className="nav-link">
                 AirTab
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/airglass" className="nav-link text-decoration-none">
+              <Link to="/airglass" className="nav-link">
                 AirGlass
               </Link>
             </li>
@@ -58,7 +64,6 @@ function NavBar() {
 
           <div className="d-flex align-items-center">
             <button
-              data-mdb-ripple-init
               type="button"
               className="btn btn-link px-3 me-2"
               onClick={() => setShowLoginModal(true)}
@@ -66,7 +71,6 @@ function NavBar() {
               Login
             </button>
             <button
-              data-mdb-ripple-init
               type="button"
               className="btn btn-primary me-3"
               onClick={() => setShowSignUpModal(true)}
@@ -77,7 +81,7 @@ function NavBar() {
         </div>
       </div>
 
-      {/* Modal logowania */}
+      {/* Login Modal */}
       <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>
         <Modal.Header closeButton className="bg-dark text-light">
           <Modal.Title>Log in</Modal.Title>
@@ -100,14 +104,14 @@ function NavBar() {
         </Modal.Footer>
       </Modal>
 
-      {/* Modal rejestracji */}
+      {/* Sign Up Modal */}
       <Modal show={showSignUpModal} onHide={() => setShowSignUpModal(false)}>
         <Modal.Header closeButton className="bg-dark text-light">
           <Modal.Title>Sign up</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-dark text-light">
           <form>
-          <div className="mb-3">
+            <div className="mb-3">
               <label htmlFor="signup-first-name" className="form-label">First name</label>
               <input type="string" className="form-control" id="signup-first-name" required />
             </div>
