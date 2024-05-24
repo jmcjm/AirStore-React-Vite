@@ -1,5 +1,7 @@
 function LandingPage() {
-  return <h1>huj</h1>;
+  return (
+    <div className=".container-fluid">czesc1</div>
+  );
 }
 
 export default LandingPage;
