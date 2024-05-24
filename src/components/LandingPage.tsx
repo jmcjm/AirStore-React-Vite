@@ -6,15 +6,23 @@ function LandingPage() {
   const { navbarHeight, availableHeight } = useContext(NavbarContext);
 
   return (
-    <div className="container-fluid bg-image text-light" style={{backgroundImage: `url('https://rybka.ct8.pl/1/012.jpg')`, height: availableHeight - 1 }}>
+    <div className="bg-image text-light" style={{backgroundImage: `url('https://rybka.ct8.pl/1/012.jpg')`, height: `calc(100vh - ${navbarHeight}px - 1px)`, position: 'fixed', width: '100%', overflowY: 'auto' }}>
       <div className='container-fluid text-light d-flex flex-column align-items-center justify-content-center main-banner'>
         <p className='header-text'>AIRGLASS</p>
         <div>
           <button type="button" className="btn btn-outline-light">Buy now</button>
         </div>
       </div>
-      <div className='container-fluid text-light d-flex flex-column align-items-center justify-content-center bg-color ads-banner'>
-        empty
+      <div className='container-md flex-wrap rounded text-light d-flex align-items-center justify-content-around ads-banner'>
+        <div className='product-box rounded text-light d-flex align-items-center justify-content-center'>
+          shit
+        </div>
+        <div className='product-box rounded text-light d-flex align-items-center justify-content-center'>
+          shit
+        </div>
+        <div className='product-box rounded text-light d-flex align-items-center justify-content-center'>
+          shit
+        </div>
       </div>
     </div>
   );  

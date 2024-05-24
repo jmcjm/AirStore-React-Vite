@@ -9,7 +9,7 @@
 
 /* LandingPage CSS */
 .main-banner {
-    height: 47%;
+    height: 46%;
 }
 .header-text {
     font-size: 100px;
@@ -17,5 +17,11 @@
 }
 .ads-banner {
     background-color: rgba(0,0,0,0.5);
-    height: 51%;
+    min-height: 300px;
+}
+.product-box {
+    background-color: rgba(150,70,10,0.5);
+    height: 280px;
+    width: 240px;
+    margin: 20px;
 }
