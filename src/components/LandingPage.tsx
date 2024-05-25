@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { NavbarContext } from '../NavbarContext';
+import LandingPageProductList from './ApiConn';
 import '../index.css';
 
 function LandingPage() {
@@ -13,17 +14,7 @@ function LandingPage() {
           <button type="button" className="btn btn-outline-light">Buy now</button>
         </div>
       </div>
-      <div className='container-md flex-wrap rounded text-light d-flex align-items-center justify-content-around ads-banner'>
-        <div className='product-box rounded text-light d-flex align-items-center justify-content-center'>
-          shit
-        </div>
-        <div className='product-box rounded text-light d-flex align-items-center justify-content-center'>
-          shit
-        </div>
-        <div className='product-box rounded text-light d-flex align-items-center justify-content-center'>
-          shit
-        </div>
-      </div>
+      <LandingPageProductList />
     </div>
   );  
 }
