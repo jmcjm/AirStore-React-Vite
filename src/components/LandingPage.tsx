@@ -14,9 +14,7 @@ function LandingPage() {
           <button type="button" className="btn btn-outline-light">Buy now</button>
         </div>
       </div>
-      <div className='container-md flex-wrap rounded text-light d-flex align-items-center justify-content-around ads-banner'>
-        <LandingPageProductList />
-      </div>
+      <LandingPageProductList />
     </div>
   );  
 }
