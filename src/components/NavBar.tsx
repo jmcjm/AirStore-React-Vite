@@ -44,7 +44,7 @@ function NavBar() {
         </button>
 
         <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
-          <ul className="navbar-nav mb-2 mb-lg-0 ms-auto">
+          <ul className="navbar-nav mb-2 me-2 mb-lg-0 ms-auto">
             <li className="nav-item">
               <Link to="/airphone" className="nav-link">
                 AirPhone
@@ -65,14 +65,14 @@ function NavBar() {
           <div className="d-flex align-items-center">
             <button
               type="button"
-              className="btn btn-link px-3 me-2"
+              className="btn btn-outline-light px-3 me-2"
               onClick={() => setShowLoginModal(true)}
             >
               Login
             </button>
             <button
               type="button"
-              className="btn btn-primary me-3"
+              className="btn btn-light"
               onClick={() => setShowSignUpModal(true)}
             >
               Sign up

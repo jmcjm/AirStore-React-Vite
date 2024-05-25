@@ -8,14 +8,6 @@ interface LandingPageProduct {
 }
 
 function LandingPageProductList() {
-    //const [products, setProducts] = useState<LandingPageProduct[]>([]); // Określ typ danych jako tablicę produktów
-
-    //useEffect(() => {
-    //    fetch('https://example.com/api/landingpageproducts')
-    //    .then(response => response.json())
-    //    .then((data: LandingPageProduct[]) => setProducts(data)) // Użyj typu Product do odpowiedniego typowania danych
-    //    .catch(error => console.error('Error fetching products:', error));
-    //}, []
     // Don't have access to api rn
     const [products, setProducts] = useState<LandingPageProduct[]>([
         {
@@ -39,12 +31,20 @@ function LandingPageProductList() {
     ]);
 
     return (
-        <div className='container-md flex-wrap rounded text-light d-flex align-items-center justify-content-around ads-banner'>
+        <div className='container-md flex-wrap rounded d-flex align-items-center justify-content-around ads-banner'>
             {products.map(product => (
-            <div key={product.id} className='product-box rounded text-light d-flex align-items-center flex-wrap flex-column justify-content-center'>
-                <h3>{product.name}</h3>
-                <p>Price: {product.price}</p>
+            <div key={product.id} className='product-box text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center'>
                 <img src={product.image} alt={product.name} />
+                <div className='d-flex align-items-center justify-content-between'>
+                    <span className='productName'>{product.name}</span>
+                    <span className='productPrice'>{product.price}$</span>
+                </div>
+                <button
+                 type="button"
+                 className="btn btn-dark"
+                >
+                 Add to basket
+                </button>
             </div>
             ))}
         </div>
