@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface LandingPageProduct {
     id: number;
@@ -30,8 +30,28 @@ function LandingPageProductList() {
         },
     ]);
 
+    const [isOverflow, setIsOverflow] = useState(false);
+    const adsBannerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        function handleResize() {
+            if (adsBannerRef.current) {
+                const adsBannerHeight = adsBannerRef.current.clientHeight;
+                const containerHeight = adsBannerRef.current.scrollHeight;
+                setIsOverflow(containerHeight > adsBannerHeight);
+            }
+        }
+
+        handleResize(); // Wywołaj raz na początku
+
+        window.addEventListener('resize', handleResize); // Nasłuchuj zmiany rozmiaru okna
+
+        // Czyszczenie nasłuchiwania zdarzeń po odmontowaniu komponentu
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     return (
-        <div className='container-md flex-wrap rounded d-flex align-items-center justify-content-around ads-banner'>
+        <div className={`container-md flex-wrap rounded d-flex align-items-center justify-content-around ads-banner ${isOverflow ? 'overflow' : ''}`} ref={adsBannerRef}>
             {products.map(product => (
             <div key={product.id} className='product-box text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center'>
                 <img src={product.image} alt={product.name} />
@@ -52,4 +72,3 @@ function LandingPageProductList() {
 }
 
 export default LandingPageProductList;
-  

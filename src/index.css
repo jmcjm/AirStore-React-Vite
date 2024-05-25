@@ -1,3 +1,4 @@
+/* tbh i think that all of that should be converted into bootstrap classes */
 /* Navbar CSS */
 .navbar-collapse {
     transition: height 0.3s ease-in-out;
@@ -21,10 +22,18 @@
     min-height: 300px;
     margin-bottom: 2%;
 }
+.ads-banner.overflow {
+    height: auto;
+}
+.ads-banner.overflow > .product-box > img {
+    height: 150px;
+}
 .product-box {
     background-color: rgb(255, 255, 255);
-    height: 280px;
-    width: 240px;
+    min-height: 280px;
+    min-width: 240px;
+    height: 80%;
+    width: 30%;
     margin: 10px;
 }
 .product-box > div {
