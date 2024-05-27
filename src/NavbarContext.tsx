@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useState, useEffect, ReactNode } from "react";
 
 interface NavbarProviderProps {
   children: ReactNode;
@@ -6,7 +6,7 @@ interface NavbarProviderProps {
 
 export const NavbarContext = createContext({
   navbarHeight: 0,
-  availableHeight: 0
+  availableHeight: 0,
 });
 
 export const NavbarProvider: React.FC<NavbarProviderProps> = ({ children }) => {
@@ -15,15 +15,15 @@ export const NavbarProvider: React.FC<NavbarProviderProps> = ({ children }) => {
 
   useEffect(() => {
     const setHeight = () => {
-      const height = document.getElementById('navbar')?.offsetHeight || 0;
+      const height = document.getElementById("navbar")?.offsetHeight || 0;
       setNavbarHeight(height);
       setAvailableHeight(window.innerHeight - height);
     };
 
     setHeight();
-    window.addEventListener('resize', setHeight);
+    window.addEventListener("resize", setHeight);
     return () => {
-      window.removeEventListener('resize', setHeight);
+      window.removeEventListener("resize", setHeight);
     };
   }, []);
 

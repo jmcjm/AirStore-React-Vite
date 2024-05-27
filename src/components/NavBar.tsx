@@ -1,9 +1,9 @@
-import React, { useState, useContext } from 'react';
-import { Modal, Button } from 'react-bootstrap';
-import ReactSvg from '../assets/react.svg';
-import { Link } from "react-router-dom"; 
-import { NavbarContext } from '../NavbarContext';
-import '../index.css';
+import React, { useState, useContext } from "react";
+import { Modal, Button } from "react-bootstrap";
+import ReactSvg from "../assets/react.svg";
+import { Link } from "react-router-dom";
+import { NavbarContext } from "../NavbarContext";
+import "../index.css";
 
 function NavBar() {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -26,7 +26,11 @@ function NavBar() {
   };
 
   return (
-    <nav id="navbar" className="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <nav
+      id="navbar"
+      className="navbar navbar-expand-lg bg-body-tertiary"
+      data-bs-theme="dark"
+    >
       <div className="container-fluid">
         <Link to="/" className="navbar-brand me-2">
           <img src={ReactSvg} height="16" alt="Logo" loading="lazy" /> AirShop
@@ -36,14 +40,17 @@ function NavBar() {
           className="navbar-toggler"
           type="button"
           aria-controls="navbarNav"
-          aria-expanded={isOpen ? 'true' : 'false'}
+          aria-expanded={isOpen ? "true" : "false"}
           aria-label="Toggle navigation"
           onClick={toggleMenu}
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className={`collapse navbar-collapse ${isOpen ? 'show' : ''}`} id="navbarNav">
+        <div
+          className={`collapse navbar-collapse ${isOpen ? "show" : ""}`}
+          id="navbarNav"
+        >
           <ul className="navbar-nav mb-2 me-2 mb-lg-0 ms-auto">
             <li className="nav-item">
               <Link to="/airphone" className="nav-link">
@@ -89,18 +96,36 @@ function NavBar() {
         <Modal.Body className="bg-dark text-light">
           <form>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label">Email address</label>
-              <input type="email" className="form-control" id="email" required />
+              <label htmlFor="email" className="form-label">
+                Email address
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="email"
+                required
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="password" className="form-label">Password</label>
-              <input type="password" className="form-control" id="password" required />
+              <label htmlFor="password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="password"
+                required
+              />
             </div>
           </form>
         </Modal.Body>
         <Modal.Footer className="bg-dark">
-          <Button variant="secondary" onClick={() => setShowLoginModal(false)}>Close</Button>
-          <Button variant="primary" onClick={handleLogin}>Log in</Button>
+          <Button variant="secondary" onClick={() => setShowLoginModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleLogin}>
+            Log in
+          </Button>
         </Modal.Footer>
       </Modal>
 
@@ -112,26 +137,58 @@ function NavBar() {
         <Modal.Body className="bg-dark text-light">
           <form>
             <div className="mb-3">
-              <label htmlFor="signup-first-name" className="form-label">First name</label>
-              <input type="string" className="form-control" id="signup-first-name" required />
+              <label htmlFor="signup-first-name" className="form-label">
+                First name
+              </label>
+              <input
+                type="string"
+                className="form-control"
+                id="signup-first-name"
+                required
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="signup-last-name" className="form-label">Last name</label>
-              <input type="string" className="form-control" id="signup-last-name" required />
+              <label htmlFor="signup-last-name" className="form-label">
+                Last name
+              </label>
+              <input
+                type="string"
+                className="form-control"
+                id="signup-last-name"
+                required
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="signup-email" className="form-label">Email address</label>
-              <input type="email" className="form-control" id="signup-email" required />
+              <label htmlFor="signup-email" className="form-label">
+                Email address
+              </label>
+              <input
+                type="email"
+                className="form-control"
+                id="signup-email"
+                required
+              />
             </div>
             <div className="mb-3">
-              <label htmlFor="signup-password" className="form-label">Password</label>
-              <input type="password" className="form-control" id="signup-password" required />
+              <label htmlFor="signup-password" className="form-label">
+                Password
+              </label>
+              <input
+                type="password"
+                className="form-control"
+                id="signup-password"
+                required
+              />
             </div>
           </form>
         </Modal.Body>
         <Modal.Footer className="bg-dark">
-          <Button variant="secondary" onClick={() => setShowSignUpModal(false)}>Close</Button>
-          <Button variant="primary" onClick={handleSignUp}>Sign up</Button>
+          <Button variant="secondary" onClick={() => setShowSignUpModal(false)}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleSignUp}>
+            Sign up
+          </Button>
         </Modal.Footer>
       </Modal>
     </nav>

@@ -1,7 +1,5 @@
 function AirTab() {
-    return (
-        <div className=".container-fluid">czesc3</div>
-    );
+  return <div className=".container-fluid">czesc3</div>;
 }
 
-export default AirTab;  
+export default AirTab;
