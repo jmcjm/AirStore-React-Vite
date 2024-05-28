@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
-import LandingPageProductList from "./ApiConn";
+import AirPhoneProductList from "./AirPhoneAPI";
+import AirPhonePNG from "../assets/airphone.png";
 import "../index.css";
 
 function AirPhone() {
@@ -8,25 +9,30 @@ function AirPhone() {
 
   return (
     <div
-      className="bg-image text-light"
+      className="bg-image text-light flex-row-reverse d-flex"
       style={{
-        backgroundImage: `url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg')`,
-        height: `calc(100vh - ${navbarHeight}px - 1px)`,
+        backgroundImage: "linear-gradient(90deg, #7d7d7d, #060606, black)",
+        height: `calc(100vh - ${navbarHeight}px - 0px)`,
         position: "fixed",
         width: "100%",
         overflowY: "auto",
         backgroundSize: "cover",
       }}
     >
-      <div className="container-fluid text-light d-flex flex-column main-banner">
-        <p className="header-text">AIRGLASS</p>
+      <div
+        className="bg-image container-fluid text-light d-flex flex-column main-banner align-items-center airphone-banner flex-shrink-1"
+        style={{
+          backgroundImage: `url(${AirPhonePNG})`,
+          backgroundSize: "cover",
+          height: "auto",
+        }}
+      >
+        <p className="header-text">AirPhone</p>
         <div>
-          <button type="button" className="btn btn-outline-light">
-            Buy now
-          </button>
+          <p>Innovation in your pocket</p>
         </div>
       </div>
-      <LandingPageProductList />
+      <AirPhoneProductList />
     </div>
   );
 }

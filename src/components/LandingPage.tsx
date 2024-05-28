@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
-import LandingPageProductList from "./ApiConn";
+import LandingPageProductList from "./LandingPageAPI";
 import "../index.css";
 
 function LandingPage() {
@@ -11,7 +11,7 @@ function LandingPage() {
       className="bg-image text-light"
       style={{
         backgroundImage: `url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg')`,
-        height: `calc(100vh - ${navbarHeight}px - 1px)`,
+        height: `calc(100vh - ${navbarHeight}px - 0px)`,
         position: "fixed",
         width: "100%",
         overflowY: "auto",
