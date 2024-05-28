@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Modal, Button } from "react-bootstrap";
-import ReactSvg from "../assets/react.svg";
+import Logo from "../components/Base64Logo";
 import { Link } from "react-router-dom";
 import { NavbarContext } from "../NavbarContext";
 import "../index.css";
@@ -33,7 +33,7 @@ function NavBar() {
     >
       <div className="container-fluid">
         <Link to="/" className="navbar-brand me-2">
-          <img src={ReactSvg} height="16" alt="Logo" loading="lazy" /> AirShop
+          <Logo /> AirShop
         </Link>
 
         <button
