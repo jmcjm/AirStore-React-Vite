@@ -11,23 +11,29 @@
 /* LandingPage CSS */
 .main-banner {
     height: 46%;
+    width: 100%;
 }
+
 .header-text {
     font-size: min(20vw, 150px);
     font-weight: 500;
 }
+
 .ads-banner {
     background-color: rgba(41, 41, 41, 0.699);
     height: 50%;
     min-height: 300px;
     margin-bottom: 2%;
 }
+
 .ads-banner.overflow {
     height: auto;
 }
+
 .ads-banner.overflow > .product-box > img {
     height: 150px;
 }
+
 .product-box {
     background-color: rgb(255, 255, 255);
     min-height: 280px;
@@ -35,17 +41,23 @@
     height: 80%;
     width: 30%;
     margin: 10px;
+    padding: 10px;
 }
+
 .product-box > div {
     width: 90%;
     padding-top: 20px;
     padding-bottom: 10px;
 }
+
 .product-box > button {
     width: 90%;
 }
-.product-box > img {
-    height: 60%;
+
+.product-box > .product-image {
+    height: auto;
+    width: 100%;
+    object-fit: cover;
 }
 
 /* AirPhonePage CSS */
@@ -53,6 +65,16 @@
     height: 40%;
     margin: 10px;
 }
+
 .mobile-columns {
     flex-direction: column !important;
+}
+@media (min-width: 768px) {
+    .main-banner {
+        width: 33.33%;
+    }
+
+    .airphone-product-list {
+        width: 66.67%;
+    }
 }

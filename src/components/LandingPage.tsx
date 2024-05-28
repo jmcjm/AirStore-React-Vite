@@ -11,14 +11,14 @@ function LandingPage() {
       className="bg-image text-light"
       style={{
         backgroundImage: `url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg')`,
-        height: `calc(100vh - ${navbarHeight}px - 0px)`,
+        height: `${availableHeight}px`,
         position: "fixed",
         width: "100%",
         overflowY: "auto",
         backgroundSize: "cover",
       }}
     >
-      <div className="container-fluid text-light d-flex flex-column align-items-center justify-content-center main-banner">
+      <div className="container-fluid text-light d-flex flex-column align-items-center justify-content-center main-banner flex-shrink-1 col-12 col-md-4">
         <p className="header-text">AIRGLASS</p>
         <div>
           <button type="button" className="btn btn-outline-light">

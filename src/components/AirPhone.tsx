@@ -29,7 +29,7 @@ function AirPhone() {
       }`}
       style={{
         backgroundImage: "linear-gradient(90deg, #7d7d7d, #060606, black)",
-        height: `calc(100vh - ${navbarHeight}px - 0px)`,
+        height: `${availableHeight}px`,
         position: "fixed",
         width: "100%",
         overflowY: "auto",
@@ -49,7 +49,9 @@ function AirPhone() {
           <p>Innovation in your pocket</p>
         </div>
       </div>
-      <AirPhoneProductList />
+      <div className="col-12 col-md-8 d-flex align-items-center">
+        <AirPhoneProductList />
+      </div>
     </div>
   );
 }

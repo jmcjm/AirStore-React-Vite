@@ -69,17 +69,22 @@ function AirPhoneProductList() {
 
   return (
     <div
-      className={
-        "container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3"
-      }
+      ref={adsBannerRef}
+      className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3 ${
+        isOverflow ? "overflow" : ""
+      }`}
     >
       {products.map((product) => (
         <div
           key={product.id}
           className="product-box product-box-airphone text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center"
         >
-          <img src={product.image} alt={product.name} />
-          <div className="d-flex align-items-center justify-content-between">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="product-image"
+          />
+          <div className="d-flex align-items-center justify-content-between w-100">
             <span className="productName">{product.name}</span>
             <span className="productPrice">{product.price}$</span>
           </div>
