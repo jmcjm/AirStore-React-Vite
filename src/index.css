@@ -13,7 +13,7 @@
     height: 46%;
 }
 .header-text {
-    font-size: 100px;
+    font-size: min(20vw, 150px);
     font-weight: 500;
 }
 .ads-banner {
@@ -52,4 +52,7 @@
 .product-box-airphone {
     height: 40%;
     margin: 10px;
+}
+.mobile-columns {
+    flex-direction: column !important;
 }
