@@ -38,8 +38,8 @@
     background-color: rgb(255, 255, 255);
     min-height: 280px;
     min-width: 240px;
-    height: 80%;
-    width: 30%;
+    height: 5vh;
+    width: min(20vw, 30px);
     margin: 10px;
     padding: 10px;
 }
@@ -55,26 +55,15 @@
 }
 
 .product-box > .product-image {
-    height: auto;
-    width: 100%;
-    object-fit: cover;
+    height: 60%;
+    /*width: 100%;*/
 }
 
 /* AirPhonePage CSS */
 .product-box-airphone {
-    height: 40%;
     margin: 10px;
 }
 
 .mobile-columns {
     flex-direction: column !important;
-}
-@media (min-width: 768px) {
-    .main-banner {
-        width: 33.33%;
-    }
-
-    .airphone-product-list {
-        width: 66.67%;
-    }
 }
