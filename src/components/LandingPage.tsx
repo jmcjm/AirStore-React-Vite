@@ -21,7 +21,6 @@ function LandingPage() {
     };
   }, []);
 
-
   return (
     <div
       className="bg-image text-light"
@@ -29,9 +28,9 @@ function LandingPage() {
         backgroundImage: `url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg')`,
         minHeight: "550px",
         height: `${availableHeight}px`,
-        position: "sticky",
+        position: "fixed",
         width: "100%",
-        overflowY: "scroll",
+        //overflowY: "auto",
         backgroundSize: "cover",
         backgroundPositionX: "center",
       }}
