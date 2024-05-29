@@ -17,6 +17,7 @@
 .header-text {
     font-size: min(20vw, 150px);
     font-weight: 500;
+    line-height: 1.2;
 }
 
 .ads-banner {

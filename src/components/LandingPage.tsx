@@ -1,10 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { NavbarContext } from "../NavbarContext";
 import LandingPageProductList from "./LandingPageAPI";
 import "../index.css";
 
 function LandingPage() {
   const { navbarHeight, availableHeight } = useContext(NavbarContext);
+  //Dynamiczne przypisywanie klas Bootstrapa
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 700);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
 
   return (
     <div

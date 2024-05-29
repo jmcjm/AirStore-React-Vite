@@ -55,8 +55,8 @@ function LandingPageProductList() {
 
   return (
     <div
-      className={`container-md flex-wrap rounded d-flex align-items-center justify-content-around ads-banner ${
-        isOverflow ? "overflow" : ""
+      className={`container-md flex-wrap rounded d-flex justify-content-around ads-banner ${
+        isOverflow ? "overflow align-items-end" : "align-items-center"
       }`}
       ref={adsBannerRef}
     >
