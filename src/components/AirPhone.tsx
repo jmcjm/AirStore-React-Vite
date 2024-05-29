@@ -37,7 +37,9 @@ function AirPhone() {
       }}
     >
       <div
-        className="bg-image container-fluid text-light d-flex flex-column main-banner align-items-center airphone-banner flex-shrink-1"
+        className={`bg-image container-fluid text-light d-flex flex-column main-banner align-items-center airphone-banner ${
+          isMobile ? "" : "col-5"
+        }`}
         style={{
           backgroundImage: `url(${AirPhonePNG})`,
           backgroundSize: "cover",
@@ -49,7 +51,10 @@ function AirPhone() {
           <p>Innovation in your pocket</p>
         </div>
       </div>
-      <div className="col-12 col-md-8 d-flex align-items-center">
+      <div className={`d-flex align-items-center  ${
+          isMobile ? "" : "col-7"
+        }`}
+        >
         <AirPhoneProductList />
       </div>
     </div>

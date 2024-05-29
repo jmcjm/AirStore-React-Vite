@@ -26,11 +26,13 @@ function LandingPage() {
       className="bg-image text-light"
       style={{
         backgroundImage: `url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg')`,
+        minHeight: "550px",
         height: `${availableHeight}px`,
         position: "fixed",
         width: "100%",
-        overflowY: "auto",
+        overflowY: "scroll",
         backgroundSize: "cover",
+        backgroundPositionX: "center",
       }}
     >
       <div className="container-fluid text-light d-flex flex-column align-items-center justify-content-center main-banner flex-shrink-1 col-12 col-md-4">
