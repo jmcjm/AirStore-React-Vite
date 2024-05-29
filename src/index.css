@@ -16,6 +16,10 @@
     font-size: min(20vw, 150px);
     font-weight: 500;
 }
+.motto-text {
+    font-size: min(5vw, 23px);
+    margin-top: -50px;
+}
 .ads-banner {
     background-color: rgba(41, 41, 41, 0.699);
     height: 50%;

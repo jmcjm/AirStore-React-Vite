@@ -12,24 +12,24 @@ function LandingPageProductList() {
   const [products, setProducts] = useState<LandingPageProduct[]>([
     {
       id: 1,
-      name: "Product 1",
-      price: 19.99,
+      name: "AirPhone 10 Pro",
+      price: 1099,
       image:
         "https://www.tescomobile.com/media/catalog/product/i/p/iphone_15_pro_max_natural_titanium_pdp_image_position-2__gben.png",
     },
     {
       id: 2,
-      name: "Product 2",
-      price: 29.99,
+      name: "AirWatch 5 Ultra",
+      price: 549,
       image:
-        "https://www.tescomobile.com/media/catalog/product/i/p/iphone_15_pro_max_natural_titanium_pdp_image_position-2__gben.png",
+        "https://store.storeimages.cdn-apple.com/4668/as-images.apple.com/is/MT5J3ref_VW_34FR+watch-49-titanium-ultra2_VW_34FR+watch-face-49-alpine-ultra2_VW_34FR?wid=750&hei=712&trim=1%2C0&fmt=p-jpg&qlt=95&.v=1694507270905",
     },
     {
       id: 3,
-      name: "Product 3",
-      price: 39.99,
+      name: "AirTab 7 Pro Create",
+      price: 1399,
       image:
-        "https://www.tescomobile.com/media/catalog/product/i/p/iphone_15_pro_max_natural_titanium_pdp_image_position-2__gben.png",
+        "https://m.media-amazon.com/images/I/61nZdcoHjOL._AC_UF894,1000_QL80_.jpg",
     },
   ]);
 

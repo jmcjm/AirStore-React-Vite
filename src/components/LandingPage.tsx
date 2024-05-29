@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { NavbarContext } from "../NavbarContext";
 import LandingPageProductList from "./LandingPageAPI";
+import { Link } from "react-router-dom";
 import "../index.css";
 
 function LandingPage() {
@@ -20,9 +21,12 @@ function LandingPage() {
     >
       <div className="container-fluid text-light d-flex flex-column align-items-center justify-content-center main-banner">
         <p className="header-text">AIRGLASS</p>
+        <p className="motto-text">The same world, but in a different way</p>
         <div>
           <button type="button" className="btn btn-outline-light">
-            Buy now
+            <Link to="/airglass" className="nav-link">
+              Check now
+            </Link>
           </button>
         </div>
       </div>

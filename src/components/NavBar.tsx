@@ -90,7 +90,7 @@ function NavBar() {
 
       {/* Login Modal */}
       <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>
-        <Modal.Header closeButton className="bg-dark text-light">
+        <Modal.Header closeButton data-bs-theme="dark" className="bg-dark text-light">
           <Modal.Title>Log in</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-dark text-light">
@@ -131,7 +131,7 @@ function NavBar() {
 
       {/* Sign Up Modal */}
       <Modal show={showSignUpModal} onHide={() => setShowSignUpModal(false)}>
-        <Modal.Header closeButton className="bg-dark text-light">
+        <Modal.Header closeButton data-bs-theme="dark" className="bg-dark text-light">
           <Modal.Title>Sign up</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-dark text-light">
