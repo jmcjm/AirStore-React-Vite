@@ -19,10 +19,12 @@
     font-weight: 500;
     line-height: 1.2;
 }
+
 .motto-text {
     font-size: min(5vw, 23px);
     margin-top: -50px;
 }
+
 .ads-banner {
     background-color: rgba(41, 41, 41, 0.699);
     height: 50%;
@@ -70,4 +72,14 @@
 
 .mobile-columns {
     flex-direction: column !important;
+}
+
+@media (min-width: 768px) {
+    .main-banner {
+        width: 33.33%;
+    }
+
+    .airphone-product-list {
+        width: 66.67%;
+    }
 }
