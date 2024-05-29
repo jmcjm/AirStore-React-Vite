@@ -55,8 +55,8 @@ function LandingPageProductList() {
 
   return (
     <div
-      className={`container-md flex-wrap rounded d-flex align-items-center justify-content-around ads-banner ${
-        isOverflow ? "overflow" : ""
+      className={`container-md flex-wrap rounded d-flex justify-content-around ads-banner ${
+        isOverflow ? "overflow align-items-end" : "align-items-center"
       }`}
       ref={adsBannerRef}
     >
@@ -65,7 +65,11 @@ function LandingPageProductList() {
           key={product.id}
           className="product-box text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center"
         >
-          <img src={product.image} alt={product.name} />
+          <img
+            src={product.image}
+            alt={product.name}
+            className="product-image"
+          />
           <div className="d-flex align-items-center justify-content-between">
             <span className="productName">{product.name}</span>
             <span className="productPrice">{product.price}$</span>

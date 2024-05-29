@@ -11,48 +11,60 @@
 /* LandingPage CSS */
 .main-banner {
     height: 46%;
+    width: 100%;
 }
+
 .header-text {
-    font-size: min(20vw, 150px);
+    font-size: min(20vw, 100px);
     font-weight: 500;
+    line-height: 1.2;
 }
+
 .ads-banner {
     background-color: rgba(41, 41, 41, 0.699);
     height: 50%;
     min-height: 300px;
     margin-bottom: 2%;
 }
+
 .ads-banner.overflow {
     height: auto;
 }
+
 .ads-banner.overflow > .product-box > img {
     height: 150px;
 }
+
 .product-box {
     background-color: rgb(255, 255, 255);
     min-height: 280px;
     min-width: 240px;
-    height: 80%;
-    width: 30%;
+    height: 5vh;
+    width: min(20vw, 30px);
     margin: 10px;
+    padding: 10px;
 }
+
 .product-box > div {
     width: 90%;
     padding-top: 20px;
     padding-bottom: 10px;
 }
+
 .product-box > button {
     width: 90%;
 }
-.product-box > img {
+
+.product-box > .product-image {
     height: 60%;
+    /*width: 100%;*/
 }
 
 /* AirPhonePage CSS */
 .product-box-airphone {
-    height: 40%;
     margin: 10px;
 }
+
 .mobile-columns {
     flex-direction: column !important;
 }

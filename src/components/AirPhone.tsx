@@ -8,11 +8,11 @@ function AirPhone() {
   const { navbarHeight, availableHeight } = useContext(NavbarContext);
 
   //Dynamiczne przypisywanie klas Bootstrapa
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 700);
+      setIsMobile(window.innerWidth < 1000);
     };
 
     window.addEventListener("resize", handleResize);
@@ -29,15 +29,17 @@ function AirPhone() {
       }`}
       style={{
         backgroundImage: "linear-gradient(90deg, #7d7d7d, #060606, black)",
-        height: `calc(100vh - ${navbarHeight}px - 0px)`,
-        position: "fixed",
+        height: `${availableHeight}px`,
+        position: "sticky",
         width: "100%",
         overflowY: "auto",
         backgroundSize: "cover",
       }}
     >
       <div
-        className="bg-image container-fluid text-light d-flex flex-column main-banner align-items-center airphone-banner flex-shrink-1"
+        className={`bg-image container-fluid text-light d-flex flex-column main-banner align-items-center airphone-banner ${
+          isMobile ? "" : "col-5"
+        }`}
         style={{
           backgroundImage: `url(${AirPhonePNG})`,
           backgroundSize: "cover",
@@ -49,7 +51,12 @@ function AirPhone() {
           <p>Innovation in your pocket</p>
         </div>
       </div>
-      <AirPhoneProductList />
+      <div className={`d-flex ${
+          isMobile ? "align-items-center" : "col-7 align-items-start"
+        }`}
+        >
+        <AirPhoneProductList />
+      </div>
     </div>
   );
 }
