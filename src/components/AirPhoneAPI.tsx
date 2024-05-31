@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useCart } from "./BasketContext";
 
-interface AirPhoneProductList {
+interface AirPhoneProduct {
   id: number;
   name: string;
   price: number;
   image: string;
 }
 
-function AirPhoneProductList() {
-  //Dynamiczne przypisywanie klas Bootstrapa
+const AirPhoneProductList: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
-
-  // Don't have access to api rn
-  const [products, setProducts] = useState<AirPhoneProductList[]>([
+  const [products, setProducts] = useState<AirPhoneProduct[]>([
     {
       id: 1,
       name: "Product 1",
@@ -51,7 +49,9 @@ function AirPhoneProductList() {
   ]);
 
   const [isOverflow, setIsOverflow] = useState(false);
+  const [addedToCart, setAddedToCart] = useState<number | null>(null);
   const adsBannerRef = useRef<HTMLDivElement>(null);
+  const { addToCart } = useCart();
 
   useEffect(() => {
     function handleResize() {
@@ -60,6 +60,7 @@ function AirPhoneProductList() {
         const containerHeight = adsBannerRef.current.scrollHeight;
         setIsOverflow(containerHeight > adsBannerHeight);
       }
+      setIsMobile(window.innerWidth < 1000);
     }
 
     handleResize(); // Wywołaj raz na początku
@@ -70,36 +71,50 @@ function AirPhoneProductList() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleAddToCart = (product: AirPhoneProduct) => {
+    addToCart(product);
+    setAddedToCart(product.id);
+    setTimeout(() => setAddedToCart(null), 600); // Reset after 2 seconds
+  };
+
   return (
-    <div
-      ref={adsBannerRef}
-      className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3 ${
-        isOverflow ? "overflow" : ""
-      }`}
-    >
-      {products.map((product) => (
-        <div
-          key={product.id}
-          className={`product-box product-box-airphone text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center ${
-            isMobile ? "product-box-mobile" : ""
-          }`}
-        >
-          <img
-            src={product.image}
-            alt={product.name}
-            className="product-image"
-          />
-          <div className="d-flex align-items-center justify-content-between w-100">
-            <span className="productName">{product.name}</span>
-            <span className="productPrice">{product.price}$</span>
+    <div>
+      <div
+        ref={adsBannerRef}
+        className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3 ${
+          isOverflow ? "overflow" : ""
+        }`}
+      >
+        {products.map((product) => (
+          <div
+            key={product.id}
+            className={`product-box product-box-airphone text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center ${
+              isMobile ? "product-box-mobile" : ""
+            }`}
+          >
+            <img
+              src={product.image}
+              alt={product.name}
+              className="product-image"
+            />
+            <div className="d-flex align-items-center justify-content-between w-100">
+              <span className="productName">{product.name}</span>
+              <span className="productPrice">{product.price}$</span>
+            </div>
+            <button
+              type="button"
+              className={`btn btn-dark ${
+                addedToCart === product.id ? "added-to-cart" : ""
+              }`}
+              onClick={() => handleAddToCart(product)}
+            >
+              {addedToCart === product.id ? "Added!" : "Add to basket"}
+            </button>
           </div>
-          <button type="button" className="btn btn-dark">
-            Add to basket
-          </button>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
-}
+};
 
 export default AirPhoneProductList;

@@ -1,3 +1,4 @@
+// NavBar.tsx
 import React, { useState, useContext } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Logo from "../components/Base64Logo";
@@ -65,6 +66,11 @@ function NavBar() {
             <li className="nav-item">
               <Link to="/airglass" className="nav-link">
                 AirGlass
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/basket" className="nav-link">
+                🛒
               </Link>
             </li>
           </ul>
