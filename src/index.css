@@ -1,14 +1,20 @@
 /* tbh i think that all of that should be converted into bootstrap classes */
-/* Navbar CSS */
-.navbar-collapse {
-    transition: height 0.3s ease-in-out;
-    overflow: hidden;
-}
-.navbar-collapse.show {
-    height: auto;
+/* Global styles */
+body {
+    background-image: url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 /* LandingPage CSS */
+.landing-page-wrapper {
+    min-height: 100vh;
+    width: 100%;
+    overflow: auto;
+}
+
+/* Ensure other elements do not interfere with background properties */
 .main-banner {
     height: 46%;
     width: 100%;
@@ -48,6 +54,13 @@
     width: min(20vw, 30px);
     margin: 10px;
     padding: 10px;
+}
+
+.product-box-mobile {
+    min-height: 260px;
+    min-width: 170px;
+    margin: 5px;
+    padding: 5px;
 }
 
 .product-box > div {

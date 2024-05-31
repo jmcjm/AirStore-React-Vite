@@ -8,6 +8,9 @@ interface AirPhoneProductList {
 }
 
 function AirPhoneProductList() {
+  //Dynamiczne przypisywanie klas Bootstrapa
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
+
   // Don't have access to api rn
   const [products, setProducts] = useState<AirPhoneProductList[]>([
     {
@@ -77,7 +80,9 @@ function AirPhoneProductList() {
       {products.map((product) => (
         <div
           key={product.id}
-          className="product-box product-box-airphone text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center"
+          className={`product-box product-box-airphone text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center ${
+            isMobile ? "product-box-mobile" : ""
+          }`}
         >
           <img
             src={product.image}

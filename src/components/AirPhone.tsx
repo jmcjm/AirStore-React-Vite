@@ -29,7 +29,7 @@ function AirPhone() {
       }`}
       style={{
         backgroundImage: "linear-gradient(90deg, #7d7d7d, #060606, black)",
-        height: `${availableHeight}px`,
+        minHeight: `${availableHeight}px`,
         position: "sticky",
         width: "100%",
         overflowY: "auto",
@@ -38,7 +38,7 @@ function AirPhone() {
     >
       <div
         className={`bg-image container-fluid text-light d-flex flex-column main-banner align-items-center airphone-banner ${
-          isMobile ? "" : "col-5"
+          isMobile ? "vh-100" : "col-5"
         }`}
         style={{
           backgroundImage: `url(${AirPhonePNG})`,
@@ -51,10 +51,11 @@ function AirPhone() {
           <p>Innovation in your pocket</p>
         </div>
       </div>
-      <div className={`d-flex ${
+      <div
+        className={`d-flex ${
           isMobile ? "align-items-center" : "col-7 align-items-start"
         }`}
-        >
+      >
         <AirPhoneProductList />
       </div>
     </div>
