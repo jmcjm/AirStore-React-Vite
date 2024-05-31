@@ -1,16 +1,17 @@
-// NavBar.tsx
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
 import Logo from "../components/Base64Logo";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { NavbarContext } from "../NavbarContext";
 import "../index.css";
 
-function NavBar() {
+const NavBar: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const { navbarHeight } = useContext(NavbarContext);
   const [isOpen, setIsOpen] = useState(false);
+  const navBarRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -26,14 +27,38 @@ function NavBar() {
     setShowSignUpModal(false);
   };
 
+  const handleLinkClick = () => {
+    if (navBarRef.current && window.innerWidth < 992) {
+      const toggleButton = navBarRef.current.querySelector(
+        ".navbar-toggler"
+      ) as HTMLElement;
+      if (toggleButton && toggleButton.getAttribute("aria-expanded") === "true") {
+        toggleButton.click();
+      }
+    }
+  };
+
+  // Listen for route changes to close the menu
+  useEffect(() => {
+    if (navBarRef.current && window.innerWidth < 992) {
+      const toggleButton = navBarRef.current.querySelector(
+        ".navbar-toggler"
+      ) as HTMLElement;
+      if (toggleButton && toggleButton.getAttribute("aria-expanded") === "true") {
+        toggleButton.click();
+      }
+    }
+  }, [location]);
+
   return (
     <nav
       id="navbar"
       className="navbar navbar-expand-lg bg-body-tertiary"
       data-bs-theme="dark"
+      ref={navBarRef}
     >
       <div className="container-fluid">
-        <Link to="/" className="navbar-brand me-2">
+        <Link to="/" className="navbar-brand me-2" onClick={handleLinkClick}>
           <Logo /> AirShop
         </Link>
 
@@ -54,22 +79,22 @@ function NavBar() {
         >
           <ul className="navbar-nav mb-2 me-2 mb-lg-0 ms-auto">
             <li className="nav-item">
-              <Link to="/airphone" className="nav-link">
+              <Link to="/airphone" className="nav-link" onClick={handleLinkClick}>
                 AirPhone
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/airtab" className="nav-link">
+              <Link to="/airtab" className="nav-link" onClick={handleLinkClick}>
                 AirTab
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/airglass" className="nav-link">
+              <Link to="/airglass" className="nav-link" onClick={handleLinkClick}>
                 AirGlass
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/basket" className="nav-link">
+              <Link to="/basket" className="nav-link" onClick={handleLinkClick}>
                 🛒
               </Link>
             </li>
@@ -199,6 +224,6 @@ function NavBar() {
       </Modal>
     </nav>
   );
-}
+};
 
 export default NavBar;
