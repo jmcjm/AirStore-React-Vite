@@ -1,8 +1,8 @@
 // is it even necessary????
 import React from "react";
-import { useCart } from "./BasketContext";
+import { useCart } from "./CartContext";
 
-const Basket: React.FC = () => {
+const Cart: React.FC = () => {
   const { cart } = useCart();
 
   return (
@@ -23,4 +23,4 @@ const Basket: React.FC = () => {
   );
 };
 
-export default Basket;
+export default Cart;

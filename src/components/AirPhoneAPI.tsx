@@ -1,6 +1,6 @@
 //broken as f at certain screen ratios (width below 1000px), AirTab is looking better in those situations
 import React, { useState, useEffect, useRef } from "react";
-import { useCart } from "./BasketContext";
+import { useCart } from "./CartContext";
 
 interface AirPhoneProduct {
   id: number;

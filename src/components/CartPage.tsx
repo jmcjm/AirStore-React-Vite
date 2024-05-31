@@ -1,8 +1,8 @@
 //WiP, one big mess rn
 import React from "react";
-import { useCart } from "./BasketContext";
+import { useCart } from "./CartContext";
 
-const BasketPage: React.FC = () => {
+const CartPage: React.FC = () => {
   const { cart, removeOneFromCart } = useCart();
 
   return (
@@ -33,4 +33,4 @@ const BasketPage: React.FC = () => {
   );
 };
 
-export default BasketPage;
+export default CartPage;

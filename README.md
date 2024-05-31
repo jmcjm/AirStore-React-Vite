@@ -4,8 +4,8 @@ This is a frontend for AirShop project for university. It's written in React wit
 - [ ] AirGlass (everything) :bangbang:
 - [ ] AirPhone (style) :snail: 
 - [ ] AirTab (style) :snail: 
-- [ ] Basket (coockies and users) :exclamation:
-- [ ] Basket (whole UI) :bangbang:
+- [ ] Cart (coockies and users) :exclamation:
+- [ ] Cart (whole UI) :bangbang:
 - [ ] Animations :snail: 
 - [ ] API connection :bangbang:
 - [ ] Users login and sign in :bangbang:

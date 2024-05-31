@@ -6,8 +6,8 @@ import AirPhone from "./components/AirPhone";
 import AirTab from "./components/AirTab";
 import AirGlass from "./components/AirGlass";
 import LandingPage from "./components/LandingPage";
-import BasketPage from "./components/BasketPage";
-import { CartProvider } from "./components/BasketContext";
+import CartPage from "./components/CartPage";
+import { CartProvider } from "./components/CartContext";
 import NavBar from "./components/NavBar";
 
 const App: React.FC = () => {
@@ -22,7 +22,7 @@ const App: React.FC = () => {
               <Route path="/airphone" element={<AirPhone />} />
               <Route path="/airtab" element={<AirTab />} />
               <Route path="/airglass" element={<AirGlass />} />
-              <Route path="/basket" element={<BasketPage />} />
+              <Route path="/cart" element={<CartPage />} />
             </Routes>
           </div>
         </CartProvider>
