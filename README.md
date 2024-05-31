@@ -1,14 +1,14 @@
 # AirStore
 This is a frontend for AirShop project for university. It's written in React with Vite and Bootstrap.
 # TODO:
-- [ ] AirGlass (everything)
-- [ ] AirPhone (style)
-- [ ] AirTab (style)
-- [ ] Basket (coockies and users)
-- [ ] Basket (whole UI)
-- [ ] Animations
-- [ ] API connection
-- [ ] Users login and sign in
-- [ ] Checkout (everything)
+- [ ] AirGlass (everything) :bangbang:
+- [ ] AirPhone (style) :snail: 
+- [ ] AirTab (style) :snail: 
+- [ ] Basket (coockies and users) :exclamation:
+- [ ] Basket (whole UI) :bangbang:
+- [ ] Animations :snail: 
+- [ ] API connection :bangbang:
+- [ ] Users login and sign in :bangbang:
+- [ ] Checkout (everything) :bangbang:
 # Run
-npm install && npm run dev (-- --host)
+npm install && npm run dev (-- --host) 
