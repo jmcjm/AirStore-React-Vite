@@ -1,3 +1,5 @@
+//it's kinda diffrent from AirPhoneAPI, need to compare
+//Api conn and basket support needs to be implemented
 import React, { useState, useEffect, useRef } from "react";
 
 interface AirTabProductList {

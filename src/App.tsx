@@ -1,3 +1,4 @@
+//It would be great to have animations when navigating between views TODO-future
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NavbarProvider } from "./NavbarContext";

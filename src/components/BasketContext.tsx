@@ -1,3 +1,5 @@
+//RN the basket is not kept in cookies or in any other way so after page reload it's context is gone, that's something to do in the future.
+//after connecting to the API and logging in the user, it would be useful to have a function that saves the user's basket data on the server side, in Postgres?
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 interface AirPhoneProduct {

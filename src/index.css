@@ -1,6 +1,6 @@
 /* tbh i think that all of that should be converted into bootstrap classes */
 /* Global styles */
-body {
+body { /*this shit is setting that background image under every view, it doesn't make any sense and needs to be deleted ASAP*/
     background-image: url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg');
     background-size: cover;
     background-position: center;

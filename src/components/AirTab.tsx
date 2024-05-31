@@ -1,3 +1,4 @@
+//it's kinda diffrent from AirPhone, need to compare
 import React, { useContext, useState, useEffect } from "react";
 import { NavbarContext } from "../NavbarContext";
 import AirTabProductList from "./AirTabAPI";

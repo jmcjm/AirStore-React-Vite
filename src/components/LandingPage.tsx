@@ -1,3 +1,4 @@
+//looking good for now?
 import React, { useContext, useState, useEffect } from "react";
 import { NavbarContext } from "../NavbarContext";
 import LandingPageProductList from "./LandingPageAPI";
