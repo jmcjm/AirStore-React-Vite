@@ -109,7 +109,7 @@ const AirPhoneProductList: React.FC = () => {
               }`}
               onClick={() => handleAddToCart(product)}
             >
-              {addedToCart === product.id ? "Added!" : "Add to basket"}
+              {addedToCart === product.id ? "Added!" : "Add to cart"}
             </button>
           </div>
         ))}

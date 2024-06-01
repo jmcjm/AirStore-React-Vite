@@ -91,7 +91,7 @@ function AirTabProductList() {
             <span className="productPrice">{product.price}$</span>
           </div>
           <button type="button" className="btn btn-dark">
-            Add to basket
+            Add to cart
           </button>
         </div>
       ))}

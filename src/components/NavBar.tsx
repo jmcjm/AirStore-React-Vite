@@ -33,7 +33,10 @@ const NavBar: React.FC = () => {
       const toggleButton = navBarRef.current.querySelector(
         ".navbar-toggler"
       ) as HTMLElement;
-      if (toggleButton && toggleButton.getAttribute("aria-expanded") === "true") {
+      if (
+        toggleButton &&
+        toggleButton.getAttribute("aria-expanded") === "true"
+      ) {
         toggleButton.click();
       }
     }
@@ -45,7 +48,10 @@ const NavBar: React.FC = () => {
       const toggleButton = navBarRef.current.querySelector(
         ".navbar-toggler"
       ) as HTMLElement;
-      if (toggleButton && toggleButton.getAttribute("aria-expanded") === "true") {
+      if (
+        toggleButton &&
+        toggleButton.getAttribute("aria-expanded") === "true"
+      ) {
         toggleButton.click();
       }
     }
@@ -80,7 +86,11 @@ const NavBar: React.FC = () => {
         >
           <ul className="navbar-nav mb-2 me-2 mb-lg-0 ms-auto">
             <li className="nav-item">
-              <Link to="/airphone" className="nav-link" onClick={handleLinkClick}>
+              <Link
+                to="/airphone"
+                className="nav-link"
+                onClick={handleLinkClick}
+              >
                 AirPhone
               </Link>
             </li>
@@ -90,12 +100,16 @@ const NavBar: React.FC = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/airglass" className="nav-link" onClick={handleLinkClick}>
+              <Link
+                to="/airglass"
+                className="nav-link"
+                onClick={handleLinkClick}
+              >
                 AirGlass
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/basket" className="nav-link" onClick={handleLinkClick}>
+              <Link to="/cart" className="nav-link" onClick={handleLinkClick}>
                 🛒
               </Link>
             </li>
@@ -122,7 +136,11 @@ const NavBar: React.FC = () => {
 
       {/* Login Modal */}
       <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>
-        <Modal.Header closeButton data-bs-theme="dark" className="bg-dark text-light">
+        <Modal.Header
+          closeButton
+          data-bs-theme="dark"
+          className="bg-dark text-light"
+        >
           <Modal.Title>Log in</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-dark text-light">
@@ -163,7 +181,11 @@ const NavBar: React.FC = () => {
 
       {/* Sign Up Modal */}
       <Modal show={showSignUpModal} onHide={() => setShowSignUpModal(false)}>
-        <Modal.Header closeButton data-bs-theme="dark" className="bg-dark text-light">
+        <Modal.Header
+          closeButton
+          data-bs-theme="dark"
+          className="bg-dark text-light"
+        >
           <Modal.Title>Sign up</Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-dark text-light">
