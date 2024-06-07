@@ -1,6 +1,4 @@
-//RN the cart is not kept in cookies or in any other way so after page reload it's context is gone, that's something to do in the future.
-//after connecting to the API and logging in the user, it would be useful to have a function that saves the user's cart data on the server side, in Postgres?
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
 interface AirPhoneProduct {
   id: number;
@@ -14,7 +12,9 @@ interface CartContextType {
   cart: AirPhoneProduct[];
   addToCart: (product: AirPhoneProduct) => void;
   removeFromCart: (productId: number) => void;
-  removeOneFromCart: (productId: number) => void; // New function
+  removeOneFromCart: (productId: number) => void;
+  saveCart: () => void; // Function to save cart to server
+  loadCart: () => void; // Function to load cart from server
 }
 
 interface CartProviderProps {
@@ -46,21 +46,59 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const removeOneFromCart = (productId: number) => {
     setCart((prevCart) => {
       const product = prevCart.find((item) => item.id === productId);
-      if (product) {
-        if (product.quantity && product.quantity > 1) {
-          return prevCart.map((item) =>
-            item.id === productId ? { ...item, quantity: item.quantity! - 1 } : item
-          );
-        } else {
-          return prevCart.filter((item) => item.id !== productId);
-        }
+      if (product && product.quantity && product.quantity > 1) {
+        return prevCart.map((item) =>
+          item.id === productId ? { ...item, quantity: item.quantity! - 1 } : item
+        );
       }
       return prevCart;
     });
   };
 
+  // Function to save cart to server
+  const saveCart = async () => {
+    try {
+      const response = await fetch('/api/saveCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cart),
+      });
+      if (!response.ok) {
+        throw new Error('Failed to save cart');
+      }
+    } catch (error) {
+      console.error('Error saving cart:', error);
+    }
+  };
+
+  // Function to load cart from server
+  const loadCart = async () => {
+    try {
+      const response = await fetch('/api/loadCart');
+      if (!response.ok) {
+        throw new Error('Failed to load cart');
+      }
+      const data = await response.json();
+      setCart(data);
+    } catch (error) {
+      console.error('Error loading cart:', error);
+    }
+  };
+
+  useEffect(() => {
+    // Load cart from server when component mounts
+    loadCart();
+  }, []);
+
+  useEffect(() => {
+    // Save cart to server whenever it changes
+    saveCart();
+  }, [cart]);
+
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, removeOneFromCart }}>
+    <CartContext.Provider value={{ cart, addToCart, removeFromCart, removeOneFromCart, saveCart, loadCart }}>
       {children}
     </CartContext.Provider>
   );

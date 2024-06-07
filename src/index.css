@@ -123,3 +123,21 @@ body { /*this shit is setting that background image under every view, it doesn't
     }
   }
   
+/* Cart */
+.CartProductBox {
+    height: 170px;
+    background-color: aliceblue;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 20px;
+    margin: 20px;
+    border-radius: 10px;
+}
+.ProductName {
+    text-align: unset;
+    font-size: 1.3em;
+    margin: 0;
+}
+.bottomRow {
+    margin-top: auto !important;
+}
