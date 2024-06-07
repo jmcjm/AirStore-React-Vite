@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-interface AirPhoneProduct {
+interface AirProducts {
   id: number;
   name: string;
   price: number;
@@ -9,8 +9,8 @@ interface AirPhoneProduct {
 }
 
 interface CartContextType {
-  cart: AirPhoneProduct[];
-  addToCart: (product: AirPhoneProduct) => void;
+  cart: AirProducts[];
+  addToCart: (product: AirProducts) => void;
   removeFromCart: (productId: number) => void;
   removeOneFromCart: (productId: number) => void;
   saveCart: () => void; // Function to save cart to server
@@ -24,9 +24,9 @@ interface CartProviderProps {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<AirPhoneProduct[]>([]);
+  const [cart, setCart] = useState<AirProducts[]>([]);
 
-  const addToCart = (product: AirPhoneProduct) => {
+  const addToCart = (product: AirProducts) => {
     setCart((prevCart) => {
       const existingProduct = prevCart.find((item) => item.id === product.id);
       if (existingProduct) {
