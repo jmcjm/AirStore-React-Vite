@@ -1,6 +1,7 @@
 //tbh only api conn needs to be done here
 import React, { useState, useEffect, useRef } from "react";
 import { useCart } from "./CartContext";
+import { Row, Col, Button, Container } from "react-bootstrap/";
 
 interface LandingPageProduct {
   id: number;
@@ -36,26 +37,8 @@ const LandingPageProductList: React.FC = () => {
   ]);
 
   const [isOverflow, setIsOverflow] = useState(false);
-  const adsBannerRef = useRef<HTMLDivElement>(null);
   const { addToCart } = useCart();
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
-
-  useEffect(() => {
-    function handleResize() {
-      if (adsBannerRef.current) {
-        const adsBannerHeight = adsBannerRef.current.clientHeight;
-        const containerHeight = adsBannerRef.current.scrollHeight;
-        setIsOverflow(containerHeight > adsBannerHeight);
-      }
-    }
-
-    handleResize(); // Wywołaj raz na początku
-
-    window.addEventListener("resize", handleResize); // Nasłuchuj zmiany rozmiaru okna
-
-    // Czyszczenie nasłuchiwania zdarzeń po odmontowaniu komponentu
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
 
   const handleAddToCart = (product: LandingPageProduct) => {
     const productWithQuantity = { ...product, quantity: 1 };
@@ -65,38 +48,47 @@ const LandingPageProductList: React.FC = () => {
   };
 
   return (
-    <div
-      className={`container-md flex-wrap rounded d-flex justify-content-around ads-banner ${
+    <Container
+      className={`flex-wrap rounded d-flex justify-content-around ads-banner ${
         isOverflow ? "overflow align-items-end" : "align-items-center"
       }`}
-      ref={adsBannerRef}
+      style={{width:"auto"}}
     >
       {products.map((product) => (
-        <div
-          key={product.id}
-          className="product-box text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center"
-        >
-          <img
-            src={product.image}
-            alt={product.name}
-            className="product-image"
-          />
-          <div className="d-flex align-items-center justify-content-between">
-            <span className="productName">{product.name}</span>
-            <span className="productPrice">{product.price}$</span>
-          </div>
-          <button
-            type="button"
-            className={`btn btn-dark ${
-              addedToCart === product.id ? "added-to-cart" : ""
-            }`}
-            onClick={() => handleAddToCart(product)}
-          >
-            Add to cart
-          </button>
+        <div className="product-box rounded text-dark d-flex flex-column justify-content-around">
+          <Row>
+            <Col className="d-flex justify-content-center align-items-center">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="product-image"
+                style={{height:"150px"}}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex justify-content-between">
+              <span>{product.name}</span>
+              <span>${product.price}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex justify-content-center align-items-center">
+             <Button
+                variant="dark"
+                className={`${
+                  addedToCart === product.id ? "added-to-cart" : ""
+                }`}
+                style={{width:"100%"}}
+                onClick={() => handleAddToCart(product)}
+              >
+              Add to cart
+             </Button>
+            </Col>
+          </Row>
         </div>
       ))}
-    </div>
+    </Container>
   );
 };
 

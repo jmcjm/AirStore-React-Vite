@@ -1,25 +1,7 @@
 /* tbh i think that all of that should be converted into bootstrap classes */
 /* Global styles */
-body { /*this shit is setting that background image under every view, it doesn't make any sense and needs to be deleted ASAP*/
-    background-image: url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-}
 
 /* LandingPage CSS */
-.landing-page-wrapper {
-    min-height: 100vh;
-    width: 100%;
-    /*overflow: auto;*/
-}
-
-/* Ensure other elements do not interfere with background properties */
-.main-banner {
-    height: 46%;
-    width: 100%;
-}
-
 .header-text {
     font-size: min(20vw, 100px);
     font-weight: 500;
@@ -28,23 +10,15 @@ body { /*this shit is setting that background image under every view, it doesn't
 
 .motto-text {
     font-size: min(5vw, 23px);
-    text-align: center;
-    /*margin-top: -50px;*/
+    margin-bottom: 20px;
 }
 
 .ads-banner {
     background-color: rgba(41, 41, 41, 0.699);
-    height: 50%;
-    min-height: 300px;
-    margin-bottom: 2%;
 }
 
 .ads-banner.overflow {
     height: auto;
-}
-
-.ads-banner.overflow > .product-box > img {
-    height: 150px;
 }
 
 .product-box {
@@ -52,9 +26,9 @@ body { /*this shit is setting that background image under every view, it doesn't
     min-height: 280px;
     min-width: 240px;
     height: 5vh;
-    width: min(20vw, 30px);
-    margin: 10px;
-    padding: 10px;
+    width: min(20vw, 30px) !important;
+    margin: 30px;
+    padding: 15px;
 }
 
 .product-box-mobile {
@@ -62,21 +36,6 @@ body { /*this shit is setting that background image under every view, it doesn't
     min-width: 170px;
     margin: 5px;
     padding: 5px;
-}
-
-.product-box > div {
-    width: 90%;
-    padding-top: 20px;
-    padding-bottom: 10px;
-}
-
-.product-box > button {
-    width: 90%;
-}
-
-.product-box > .product-image {
-    height: 60%;
-    /*width: 100%;*/
 }
 
 /* AirPhonePage CSS */
@@ -136,7 +95,6 @@ body { /*this shit is setting that background image under every view, it doesn't
     padding-bottom: 20px;
     padding-right: 20px;
     margin: 20px 0px 20px 20px;
-    border-radius: 10px;
 }
 .CartProductBoxMobileFix {
     margin: 30px;
@@ -155,7 +113,6 @@ body { /*this shit is setting that background image under every view, it doesn't
     background-color: #f8f9fa;
     padding: 30px;
     margin: 20px 20px 20px 0px;
-    border-radius: 10px;
 }
 .CartSummaryMobileFix {
     margin: 30px;

@@ -17,7 +17,7 @@ export const NavbarProvider: React.FC<NavbarProviderProps> = ({ children }) => {
     const setHeight = () => {
       const height = document.getElementById("navbar")?.offsetHeight || 0;
       setNavbarHeight(height);
-      setAvailableHeight(window.innerHeight - height - 4); //idk why but without the -4px, there is an overflow
+      setAvailableHeight(window.innerHeight - height);
     };
 
     setHeight();
