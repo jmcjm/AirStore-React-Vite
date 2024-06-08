@@ -58,9 +58,10 @@ const LandingPageProductList: React.FC = () => {
   }, []);
 
   const handleAddToCart = (product: LandingPageProduct) => {
-    addToCart(product);
+    const productWithQuantity = { ...product, quantity: 1 };
+    addToCart(productWithQuantity);
     setAddedToCart(product.id);
-    setTimeout(() => setAddedToCart(null), 600); // Reset after 2 seconds
+    setTimeout(() => setAddedToCart(null), 600);
   };
 
   return (

@@ -124,14 +124,22 @@ body { /*this shit is setting that background image under every view, it doesn't
   }
   
 /* Cart */
+.CartTitle {
+    margin-top: 20px;
+    font-size: 3em;
+    font-weight: bold;
+}
 .CartProductBox {
-    height: 170px;
-    background-color: aliceblue;
+    height: 230px;
+    background-color: #f8f9fa;
     padding-top: 20px;
     padding-bottom: 20px;
     padding-right: 20px;
-    margin: 20px;
+    margin: 20px 0px 20px 20px;
     border-radius: 10px;
+}
+.CartProductBoxMobileFix {
+    margin: 30px;
 }
 .ProductName {
     text-align: unset;
@@ -140,4 +148,15 @@ body { /*this shit is setting that background image under every view, it doesn't
 }
 .bottomRow {
     margin-top: auto !important;
+}
+.CartSummary {
+    min-height: 170px;
+    min-width: 256px;
+    background-color: #f8f9fa;
+    padding: 30px;
+    margin: 20px 20px 20px 0px;
+    border-radius: 10px;
+}
+.CartSummaryMobileFix {
+    margin: 30px;
 }
