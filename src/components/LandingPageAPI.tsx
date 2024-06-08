@@ -36,9 +36,21 @@ const LandingPageProductList: React.FC = () => {
     },
   ]);
 
-  const [isOverflow, setIsOverflow] = useState(false);
   const { addToCart } = useCart();
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 950);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const handleAddToCart = (product: LandingPageProduct) => {
     const productWithQuantity = { ...product, quantity: 1 };
@@ -50,12 +62,14 @@ const LandingPageProductList: React.FC = () => {
   return (
     <Container
       className={`flex-wrap rounded d-flex justify-content-around ads-banner ${
-        isOverflow ? "overflow align-items-end" : "align-items-center"
+        isMobile ? "align-items-end" : "align-items-center"
       }`}
-      style={{width:"auto"}}
+      style={{width:"auto", backgroundColor: "rgba(41, 41, 41, 0.699)"}}
     >
       {products.map((product) => (
-        <div className="product-box rounded text-dark d-flex flex-column justify-content-around">
+        <div className={`product-box rounded text-dark d-flex flex-column justify-content-around ${
+          isMobile ? "product-box-mobile" : ""
+        }`}>
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
               <img

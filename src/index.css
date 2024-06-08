@@ -13,14 +13,6 @@
     margin-bottom: 20px;
 }
 
-.ads-banner {
-    background-color: rgba(41, 41, 41, 0.699);
-}
-
-.ads-banner.overflow {
-    height: auto;
-}
-
 .product-box {
     background-color: rgb(255, 255, 255);
     min-height: 280px;
@@ -32,11 +24,10 @@
 }
 
 .product-box-mobile {
-    min-height: 260px;
-    min-width: 170px;
-    margin: 5px;
-    padding: 5px;
+    min-width: 200px;
+    margin: 15px;
 }
+
 
 /* AirPhonePage CSS */
 .product-box-airphone {
