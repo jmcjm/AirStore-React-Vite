@@ -1,4 +1,11 @@
 /* tbh i think that all of that should be converted into bootstrap classes */
+@import url('https://fonts.googleapis.com/css2?family=Maven+Pro:wght@400..900&display=swap');
+
+body {
+    font-family: "Maven Pro", sans-serif !important;
+    font-optical-sizing: auto;
+}
+
 /* NavBar logo */
 #navbar > div > a > img {
     height: 25px;
