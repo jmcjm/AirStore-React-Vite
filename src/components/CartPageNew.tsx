@@ -107,6 +107,11 @@ const CartPage: React.FC = () => {
                   </div>
                 ))}
               </Col>
+              {isMobile && (
+                <Col xs={15} style={{ marginTop: "-10px", marginBottom: "-15px" }}>
+                  <hr className="rounded" style={{ borderWidth: "7px", color: "white" }} />
+                </Col>
+              )}
               <Col>
                 <div
                   className={`CartSummary rounded ${

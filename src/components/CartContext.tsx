@@ -109,12 +109,12 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   useEffect(() => {
     // Load cart from server when component mounts
-    loadCart();
+    //loadCart();
   }, []);
 
   useEffect(() => {
     // Save cart to server whenever it changes
-    saveCart();
+    //saveCart();
   }, [cart]);
 
   return (

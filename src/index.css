@@ -35,6 +35,12 @@
     margin: 11px;
 }
 
+.product-box-mobile-super-narrow {
+    min-width: 44%;
+    margin: 10px;
+    padding: 10px;
+}
+
 .mobile-columns {
     flex-direction: column !important;
 }

@@ -7,9 +7,10 @@ import "../index.css";
 
 function AirPhone() {
   const { navbarHeight, availableHeight } = useContext(NavbarContext);
-
-  //Dynamiczne przypisywanie klas Bootstrapa
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
+  const backgroundImage = isMobile
+  ? "linear-gradient(0deg, #696969, #060606, black)"
+  : "linear-gradient(90deg, #7d7d7d, #060606, black)";
 
   useEffect(() => {
     const handleResize = () => {
@@ -29,7 +30,7 @@ function AirPhone() {
         isMobile ? "flex-column" : "flex-row-reverse"
       }`}
       style={{
-        backgroundImage: "linear-gradient(90deg, #7d7d7d, #060606, black)",
+        backgroundImage: backgroundImage,
         minHeight: `${availableHeight}px`,
         position: "sticky",
         width: "100%",

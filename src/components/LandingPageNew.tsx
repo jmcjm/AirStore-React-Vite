@@ -7,11 +7,11 @@ import "../index.css";
 
 function LandingPage() {
   const { availableHeight } = useContext(NavbarContext);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 700);
+  const [isMobileShort, setIsMobileShort] = useState(window.innerWidth < 600);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 700);
+      setIsMobileShort(window.innerHeight < 600);
     };
 
     window.addEventListener("resize", handleResize);
@@ -36,7 +36,11 @@ function LandingPage() {
         backgroundSize: "cover",
       }}
     >
-        <Row className="text-light flex-column" style={{height:"40%"}}>
+        <Row className="text-light flex-column"  
+        style={{ 
+          height: "40%", 
+          ...(isMobileShort && { height: "75%" })
+        }}>
             <Col className="d-flex flex-column align-items-center justify-content-center">
                 <div className="header-text">AIRGLASS</div>
                 <div className="motto-text">The same world, but in a different way</div>

@@ -14,6 +14,27 @@ interface LandingPageProduct {
   image: string;
 }
 
+const defaultProducts: LandingPageProduct[] = [
+  {
+    id: 5,
+    name: "AirPhone 10 Pro",
+    price: 1099,
+    image: AirPhoneB64,
+  },
+  {
+    id: 7,
+    name: "AirWatch 5 Ultra",
+    price: 549,
+    image: AirWatchB64,
+  },
+  {
+    id: 9,
+    name: "AirTab 7 Pro Create",
+    price: 1399,
+    image: AirTabB64,
+  },
+];
+
 const LandingPageProductList: React.FC = () => {
   const localImages = new Map<number, string>([
     [5, AirPhoneB64],
@@ -24,25 +45,33 @@ const LandingPageProductList: React.FC = () => {
   const { addToCart } = useCart();
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
-  const [products, setProducts] = useState<LandingPageProduct[]>([]);
+  const [products, setProducts] = useState<LandingPageProduct[]>(defaultProducts);
 
   useEffect(() => {
     async function fetchProducts() {
-      const productIds = [5, 7, 9];
-      const productPromises = productIds.map((id) => fetchProductByID(id));
-      const fetchedProducts = await Promise.all(productPromises);
-      const updatedProducts = fetchedProducts
-        .filter((product) => product !== null) // Remove null values
-        .map((product) => {
-          const localImage = localImages.get(product!.id);
-          const updatedProduct = {
-            ...product!,
-            image: localImage || product!.image, // Replace image if local
-          };
-          console.log("Updated Product:", updatedProduct); // Debug log
-          return updatedProduct;
-        });
-      setProducts(updatedProducts as LandingPageProduct[]);
+      try {
+        const productIds = [5, 7, 9];
+        const productPromises = productIds.map((id) => fetchProductByID(id));
+        const fetchedProducts = await Promise.all(productPromises);
+
+        if (fetchedProducts.some(product => product)) {
+          const updatedProducts = fetchedProducts
+            .filter((product) => product !== null) // Remove null values
+            .map((product) => {
+              const localImage = localImages.get(product!.id);
+              return {
+                ...product!,
+                image: localImage || product!.image, // Replace image if local
+              };
+            });
+          setProducts(updatedProducts as LandingPageProduct[]);
+        } else {
+          setProducts(defaultProducts); // Use default products if none fetched
+        }
+      } catch (error) {
+        console.error("Error fetching products:", error);
+        setProducts(defaultProducts); // Use default products on error
+      }
     }
 
     fetchProducts();
