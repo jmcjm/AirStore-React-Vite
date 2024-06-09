@@ -2,7 +2,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { NavbarContext } from "../NavbarContext";
 import AirPhoneProductList from "./AirPhoneAPI";
-import AirPhonePNG from "../assets/airphone.png";
+const AirPhonePNG = "https://rybka.ct8.pl/airphone.jpg"; //tymczasowy fix
 import "../index.css";
 
 function AirPhone() {
@@ -44,6 +44,7 @@ function AirPhone() {
         style={{
           backgroundImage: `url(${AirPhonePNG})`,
           backgroundSize: "cover",
+          backgroundPosition: "center",
           height: "auto",
         }}
       >
