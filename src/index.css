@@ -30,10 +30,9 @@
     margin: 15px;
 }
 
-
-/* AirPhonePage CSS */
-.product-box-airphone {
-    margin: 10px;
+.product-box-mobile-narrow {
+    min-width: 180px;
+    margin: 11px;
 }
 
 .mobile-columns {
@@ -90,7 +89,8 @@
     margin: 20px 0px 20px 20px;
 }
 .CartProductBoxMobileFix {
-    margin: 30px;
+    margin: 20px 5px 20px 5px;
+    height: 215px;
 }
 .ProductName {
     text-align: unset;

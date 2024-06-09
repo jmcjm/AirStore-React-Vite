@@ -93,12 +93,14 @@ function AirPhoneProductList() {
 
   return (
     <Container
-      className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3`}
+      fluid
+      className={`flex-wrap d-flex align-items-center justify-content-around`}
+      style={{ maxWidth: "1000px" }}
     >
       {products.map((product) => (
         <div
-          className={`product-box rounded text-dark d-flex flex-column justify-content-around ${
-            isMobile ? "product-box-mobile" : ""
+          className={`product-box product-box-mobile rounded text-dark d-flex flex-column justify-content-around ${
+            isMobile ? "product-box-mobile-narrow" : ""
           }`}
         >
           <Row>

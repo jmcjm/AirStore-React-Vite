@@ -8,11 +8,11 @@ const CartPage: React.FC = () => {
   const { cart, addToCart, removeFromCart, removeOneFromCart, getTotalCost } =
     useCart();
   const { availableHeight } = useContext(NavbarContext);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 750);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 750);
+      setIsMobile(window.innerWidth < 770);
     };
 
     window.addEventListener("resize", handleResize);
@@ -59,9 +59,9 @@ const CartPage: React.FC = () => {
                       className="d-flex justify-content-center align-items-center"
                     >
                       <img
-                        src={item.image}
+                        src={`data:image/jpeg;base64,${item.image}`}
                         alt={item.name}
-                        style={{ maxWidth: "70%", maxHeight: "100%" }}
+                        style={{ maxWidth: "100%", maxHeight: "100%" }}
                       />
                     </Col>
                     <Col
