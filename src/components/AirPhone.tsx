@@ -1,4 +1,3 @@
-//broken as f at certain screen ratios (width below 1000px), AirTab is looking better in those situations
 import React, { useContext, useState, useEffect } from "react";
 import { NavbarContext } from "../NavbarContext";
 import AirPhoneProductList from "./AirPhoneAPI";
