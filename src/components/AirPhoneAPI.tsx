@@ -121,7 +121,7 @@ function AirPhoneProductList() {
                 style={{ width: "100%" }}
                 onClick={() => handleAddToCart(product)}
               >
-                Add to cart
+                {addedToCart === product.id ? "Added!" : "Add to cart"}
               </Button>
             </Col>
           </Row>
