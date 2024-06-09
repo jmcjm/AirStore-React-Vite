@@ -1,7 +1,8 @@
-//broken as f at certain screen ratios (width below 1000px), AirTab is looking better in those situations
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "./CartContext";
 import { Row, Col, Button, Container } from "react-bootstrap/";
+import { fetchProductsByType } from "./ApiConn";
+import { AirPhoneB64 } from "../assets/AirPhoneB64";
 
 interface AirPhoneProduct {
   id: number;
@@ -10,8 +11,8 @@ interface AirPhoneProduct {
   image: string;
 }
 
-const AirPhoneProductList: React.FC = () => {
-  const [products, setProducts] = useState<AirPhoneProduct[]>([
+function AirPhoneProductList() {
+  /*const [products, setProducts] = useState<AirPhoneProduct[]>([
     {
       id: 1,
       name: "Product 1",
@@ -47,11 +48,12 @@ const AirPhoneProductList: React.FC = () => {
       image:
         "https://www.tescomobile.com/media/catalog/product/i/p/iphone_15_pro_max_natural_titanium_pdp_image_position-2__gben.png",
     },
-  ]);
+  ]);*/
 
-  const { addToCart } = useCart();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
+  const { addToCart } = useCart();
+  const [products, setProducts] = useState<AirPhoneProduct[]>([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -72,6 +74,23 @@ const AirPhoneProductList: React.FC = () => {
     setTimeout(() => setAddedToCart(null), 600);
   };
 
+  useEffect(() => {
+    const productType = 1; // 1 - AirPhone, 2 - AirTab, 3 - AirWatch , 4 - AirGlass
+    fetchProductsByType(productType).then(setProducts);
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 1000);
+    }
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <Container
       className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3`}
@@ -85,7 +104,7 @@ const AirPhoneProductList: React.FC = () => {
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
               <img
-                src={product.image}
+                src={`data:image/jpeg;base64,${AirPhoneB64}`} //src={product.image} waiting on API images implementation
                 alt={product.name}
                 className="product-image"
                 style={{ height: "150px" }}
@@ -116,6 +135,6 @@ const AirPhoneProductList: React.FC = () => {
       ))}
     </Container>
   );
-};
+}
 
 export default AirPhoneProductList;

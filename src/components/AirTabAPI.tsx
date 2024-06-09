@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from "./CartContext";
 import { Row, Col, Button, Container } from "react-bootstrap/";
+import { fetchProductsByType } from "./ApiConn";
+import { AirTabB64 } from "../assets/AirTabB64";
 
 interface AirTabProduct {
   id: number;
@@ -10,7 +12,7 @@ interface AirTabProduct {
 }
 
 function AirTabProductList() {
-  const [products, setProducts] = useState<AirTabProduct[]>([
+  /*const [products, setProducts] = useState<AirTabProduct[]>([
     {
       id: 1,
       name: "Product 1",
@@ -46,11 +48,12 @@ function AirTabProductList() {
       image:
         "https://www.tescomobile.com/media/catalog/product/i/p/iphone_15_pro_max_natural_titanium_pdp_image_position-2__gben.png",
     },
-  ]);
+  ]);*/
 
-  const { addToCart } = useCart();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
+  const { addToCart } = useCart();
+  const [products, setProducts] = useState<AirTabProduct[]>([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -71,6 +74,23 @@ function AirTabProductList() {
     setTimeout(() => setAddedToCart(null), 600);
   };
 
+  useEffect(() => {
+    const productType = 2; // 1 - AirPhone, 2 - AirTab, 3 - AirWatch , 4 - AirGlass
+    fetchProductsByType(productType).then(setProducts);
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 1000);
+    }
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <Container
       className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3`}
@@ -84,7 +104,7 @@ function AirTabProductList() {
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
               <img
-                src={product.image}
+                src={`data:image/jpeg;base64,${AirTabB64}`} //src={product.image} waiting on API images implementation
                 alt={product.name}
                 className="product-image"
                 style={{ height: "150px" }}
