@@ -1,6 +1,7 @@
 //broken as f at certain screen ratios (width below 1000px), AirTab is looking better in those situations
 import React, { useState, useEffect, useRef } from "react";
 import { useCart } from "./CartContext";
+import { Row, Col, Button, Container } from "react-bootstrap/";
 
 interface AirPhoneProduct {
   id: number;
@@ -10,7 +11,6 @@ interface AirPhoneProduct {
 }
 
 const AirPhoneProductList: React.FC = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
   const [products, setProducts] = useState<AirPhoneProduct[]>([
     {
       id: 1,
@@ -49,27 +49,20 @@ const AirPhoneProductList: React.FC = () => {
     },
   ]);
 
-  const [isOverflow, setIsOverflow] = useState(false);
-  const [addedToCart, setAddedToCart] = useState<number | null>(null);
-  const adsBannerRef = useRef<HTMLDivElement>(null);
   const { addToCart } = useCart();
+  const [addedToCart, setAddedToCart] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
 
   useEffect(() => {
-    function handleResize() {
-      if (adsBannerRef.current) {
-        const adsBannerHeight = adsBannerRef.current.clientHeight;
-        const containerHeight = adsBannerRef.current.scrollHeight;
-        setIsOverflow(containerHeight > adsBannerHeight);
-      }
-      setIsMobile(window.innerWidth < 1000);
-    }
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 950);
+    };
 
-    handleResize(); // Wywołaj raz na początku
+    window.addEventListener("resize", handleResize);
 
-    window.addEventListener("resize", handleResize); // Nasłuchuj zmiany rozmiaru okna
-
-    // Czyszczenie nasłuchiwania zdarzeń po odmontowaniu komponentu
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   const handleAddToCart = (product: AirPhoneProduct) => {
@@ -80,42 +73,48 @@ const AirPhoneProductList: React.FC = () => {
   };
 
   return (
-    <div>
-      <div
-        ref={adsBannerRef}
-        className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3 ${
-          isOverflow ? "overflow" : ""
-        }`}
-      >
-        {products.map((product) => (
-          <div
-            key={product.id}
-            className={`product-box product-box-airphone text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center ${
-              isMobile ? "product-box-mobile" : ""
-            }`}
-          >
-            <img
-              src={product.image}
-              alt={product.name}
-              className="product-image"
-            />
-            <div className="d-flex align-items-center justify-content-between w-100">
-              <span className="productName">{product.name}</span>
-              <span className="productPrice">{product.price}$</span>
-            </div>
-            <button
-              type="button"
-              className={`btn btn-dark ${
-                addedToCart === product.id ? "added-to-cart" : ""
-              }`}
-              onClick={() => handleAddToCart(product)}
-            >
-              {addedToCart === product.id ? "Added!" : "Add to cart"}
-            </button>
-          </div>
-        ))}
-      </div>
-    </div>
+    <Container
+      className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3`}
+    >
+      {products.map((product) => (
+        <div
+          className={`product-box rounded text-dark d-flex flex-column justify-content-around ${
+            isMobile ? "product-box-mobile" : ""
+          }`}
+        >
+          <Row>
+            <Col className="d-flex justify-content-center align-items-center">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="product-image"
+                style={{ height: "150px" }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex justify-content-between">
+              <span>{product.name}</span>
+              <span>${product.price}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex justify-content-center align-items-center">
+              <Button
+                variant="dark"
+                className={`${
+                  addedToCart === product.id ? "added-to-cart" : ""
+                }`}
+                style={{ width: "100%" }}
+                onClick={() => handleAddToCart(product)}
+              >
+                Add to cart
+              </Button>
+            </Col>
+          </Row>
+        </div>
+      ))}
+    </Container>
   );
 };
 

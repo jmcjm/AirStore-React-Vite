@@ -1,5 +1,8 @@
 /* tbh i think that all of that should be converted into bootstrap classes */
-/* Global styles */
+/* NavBar logo */
+#navbar > div > a > img {
+    height: 25px;
+}
 
 /* LandingPage CSS */
 .header-text {

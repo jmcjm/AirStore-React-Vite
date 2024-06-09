@@ -64,19 +64,21 @@ const LandingPageProductList: React.FC = () => {
       className={`flex-wrap rounded d-flex justify-content-around ads-banner ${
         isMobile ? "align-items-end" : "align-items-center"
       }`}
-      style={{width:"auto", backgroundColor: "rgba(41, 41, 41, 0.699)"}}
+      style={{ width: "auto", backgroundColor: "rgba(41, 41, 41, 0.699)" }}
     >
       {products.map((product) => (
-        <div className={`product-box rounded text-dark d-flex flex-column justify-content-around ${
-          isMobile ? "product-box-mobile" : ""
-        }`}>
+        <div
+          className={`product-box rounded text-dark d-flex flex-column justify-content-around ${
+            isMobile ? "product-box-mobile" : ""
+          }`}
+        >
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
               <img
                 src={product.image}
                 alt={product.name}
                 className="product-image"
-                style={{height:"150px"}}
+                style={{ height: "150px" }}
               />
             </Col>
           </Row>
@@ -88,16 +90,16 @@ const LandingPageProductList: React.FC = () => {
           </Row>
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
-             <Button
+              <Button
                 variant="dark"
                 className={`${
                   addedToCart === product.id ? "added-to-cart" : ""
                 }`}
-                style={{width:"100%"}}
+                style={{ width: "100%" }}
                 onClick={() => handleAddToCart(product)}
               >
-              Add to cart
-             </Button>
+                Add to cart
+              </Button>
             </Col>
           </Row>
         </div>

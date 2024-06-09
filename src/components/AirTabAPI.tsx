@@ -1,8 +1,8 @@
-//it's kinda diffrent from AirPhoneAPI, need to compare
-//Api conn and basket support needs to be implemented
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import { useCart } from "./CartContext";
+import { Row, Col, Button, Container } from "react-bootstrap/";
 
-interface AirTabProductList {
+interface AirTabProduct {
   id: number;
   name: string;
   price: number;
@@ -10,8 +10,7 @@ interface AirTabProductList {
 }
 
 function AirTabProductList() {
-  // Don't have access to api rn
-  const [products, setProducts] = useState<AirTabProductList[]>([
+  const [products, setProducts] = useState<AirTabProduct[]>([
     {
       id: 1,
       name: "Product 1",
@@ -49,53 +48,72 @@ function AirTabProductList() {
     },
   ]);
 
-  const [isOverflow, setIsOverflow] = useState(false);
-  const adsBannerRef = useRef<HTMLDivElement>(null);
+  const { addToCart } = useCart();
+  const [addedToCart, setAddedToCart] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
 
   useEffect(() => {
-    function handleResize() {
-      if (adsBannerRef.current) {
-        const adsBannerHeight = adsBannerRef.current.clientHeight;
-        const containerHeight = adsBannerRef.current.scrollHeight;
-        setIsOverflow(containerHeight > adsBannerHeight);
-      }
-    }
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 950);
+    };
 
-    handleResize(); // Wywołaj raz na początku
+    window.addEventListener("resize", handleResize);
 
-    window.addEventListener("resize", handleResize); // Nasłuchuj zmiany rozmiaru okna
-
-    // Czyszczenie nasłuchiwania zdarzeń po odmontowaniu komponentu
-    return () => window.removeEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
+  const handleAddToCart = (product: AirTabProduct) => {
+    const productWithQuantity = { ...product, quantity: 1 };
+    addToCart(productWithQuantity);
+    setAddedToCart(product.id);
+    setTimeout(() => setAddedToCart(null), 600);
+  };
+
   return (
-    <div
-      ref={adsBannerRef}
-      className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3 ${
-        isOverflow ? "overflow" : ""
-      }`}
+    <Container
+      className={`container-md flex-wrap d-flex align-items-center justify-content-around flex-grow-3`}
     >
       {products.map((product) => (
         <div
-          key={product.id}
-          className="product-box product-box-airphone text-dark rounded d-flex align-items-center flex-wrap flex-column justify-content-center"
+          className={`product-box rounded text-dark d-flex flex-column justify-content-around ${
+            isMobile ? "product-box-mobile" : ""
+          }`}
         >
-          <img
-            src={product.image}
-            alt={product.name}
-            className="product-image"
-          />
-          <div className="d-flex align-items-center justify-content-between w-100">
-            <span className="productName">{product.name}</span>
-            <span className="productPrice">{product.price}$</span>
-          </div>
-          <button type="button" className="btn btn-dark">
-            Add to cart
-          </button>
+          <Row>
+            <Col className="d-flex justify-content-center align-items-center">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="product-image"
+                style={{ height: "150px" }}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex justify-content-between">
+              <span>{product.name}</span>
+              <span>${product.price}</span>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="d-flex justify-content-center align-items-center">
+              <Button
+                variant="dark"
+                className={`${
+                  addedToCart === product.id ? "added-to-cart" : ""
+                }`}
+                style={{ width: "100%" }}
+                onClick={() => handleAddToCart(product)}
+              >
+                Add to cart
+              </Button>
+            </Col>
+          </Row>
         </div>
       ))}
-    </div>
+    </Container>
   );
 }
 
