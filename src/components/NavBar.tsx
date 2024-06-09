@@ -1,14 +1,19 @@
-//needs logic for login
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Modal, Button } from "react-bootstrap";
-import Logo from "../components/Base64Logo";
+import Logo from "../assets/Base64Logo";
 import { Link, useLocation } from "react-router-dom";
 import { NavbarContext } from "../NavbarContext";
+import { login } from "./ApiConn";
 import "../index.css";
 
 const NavBar: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
+    !!localStorage.getItem("token")
+  );
   const { navbarHeight } = useContext(NavbarContext);
   const [isOpen, setIsOpen] = useState(false);
   const navBarRef = useRef<HTMLDivElement>(null);
@@ -18,9 +23,21 @@ const NavBar: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogin = () => {
-    // Handle login logic
-    setShowLoginModal(false);
+  const handleLogin = async () => {
+    try {
+      const response = await login(username, password);
+      console.log("Login successful:", response);
+      setIsLoggedIn(true); // Set logged in state
+      setShowLoginModal(false);
+    } catch (error) {
+      console.error("Login failed:", error);
+      // Handle login failure (e.g., show error message)
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
   };
 
   const handleSignUp = () => {
@@ -116,20 +133,32 @@ const NavBar: React.FC = () => {
           </ul>
 
           <div className="d-flex align-items-center">
-            <button
-              type="button"
-              className="btn btn-outline-light px-3 me-2"
-              onClick={() => setShowLoginModal(true)}
-            >
-              Login
-            </button>
-            <button
-              type="button"
-              className="btn btn-light"
-              onClick={() => setShowSignUpModal(true)}
-            >
-              Sign up
-            </button>
+            {isLoggedIn ? (
+              <Button
+                variant="outline-light"
+                className="px-3 me-2"
+                onClick={handleLogout}
+              >
+                Logout
+              </Button>
+            ) : (
+              <>
+                <Button
+                  variant="outline-light"
+                  className="px-3 me-2"
+                  onClick={() => setShowLoginModal(true)}
+                >
+                  Login
+                </Button>
+                <Button
+                  variant="light"
+                  className="btn"
+                  onClick={() => setShowSignUpModal(true)}
+                >
+                  Sign up
+                </Button>
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -146,13 +175,15 @@ const NavBar: React.FC = () => {
         <Modal.Body className="bg-dark text-light">
           <form>
             <div className="mb-3">
-              <label htmlFor="email" className="form-label">
-                Email address
+              <label htmlFor="username" className="form-label">
+                Username
               </label>
               <input
-                type="email"
+                type="text"
                 className="form-control"
-                id="email"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -164,6 +195,8 @@ const NavBar: React.FC = () => {
                 type="password"
                 className="form-control"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
@@ -195,7 +228,7 @@ const NavBar: React.FC = () => {
                 First name
               </label>
               <input
-                type="string"
+                type="text"
                 className="form-control"
                 id="signup-first-name"
                 required
@@ -206,7 +239,7 @@ const NavBar: React.FC = () => {
                 Last name
               </label>
               <input
-                type="string"
+                type="text"
                 className="form-control"
                 id="signup-last-name"
                 required
