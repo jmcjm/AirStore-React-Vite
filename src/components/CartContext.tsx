@@ -20,19 +20,30 @@ interface CartContextType {
   addToCart: (product: AirProducts) => void;
   removeFromCart: (productId: number) => void;
   removeOneFromCart: (productId: number) => void;
-  saveCart: () => void;
-  loadCart: () => void;
   getTotalCost: () => number;
 }
 
 interface CartProviderProps {
-  children: ReactNode;
+  children: ReactNode; // Typ dla children
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<AirProducts[]>([]);
+
+  useEffect(() => {
+    // Load cart from cookies when component mounts
+    const savedCart = Cookies.get("cart");
+    if (savedCart) {
+      setCart(JSON.parse(savedCart));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save cart to cookies whenever it changes
+    Cookies.set("cart", JSON.stringify(cart), { expires: 7, sameSite: "Lax" });
+  }, [cart]);
 
   const addToCart = (product: AirProducts) => {
     setCart((prevCart) => {
@@ -67,36 +78,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     });
   };
 
-  // Function to save cart to cookies
-  const saveCart = () => {
-    try {
-      Cookies.set("cart", JSON.stringify(cart), {
-        expires: 7,
-        path: "/",
-        secure: true,
-        sameSite: "Lax",
-      });
-      console.log("Cart saved to cookies:", JSON.stringify(cart));
-    } catch (error) {
-      console.error("Error saving cart to cookies:", error);
-    }
-  };
-
-  // Function to load cart from cookies
-  const loadCart = () => {
-    try {
-      const cartFromCookies = Cookies.get("cart");
-      if (cartFromCookies) {
-        setCart(JSON.parse(cartFromCookies));
-        console.log("Cart loaded from cookies:", JSON.parse(cartFromCookies));
-      } else {
-        console.log("No cart found in cookies");
-      }
-    } catch (error) {
-      console.error("Error loading cart from cookies:", error);
-    }
-  };
-
   // Function to get total cost of cart
   const getTotalCost = () => {
     const totalCost = cart.reduce(
@@ -106,16 +87,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     return parseFloat(totalCost.toFixed(2));
   };
 
-  useEffect(() => {
-    // Load cart from cookies when component mounts
-    loadCart();
-  }, []);
-
-  useEffect(() => {
-    // Save cart to cookies whenever it changes
-    saveCart();
-  }, [cart]);
-
   return (
     <CartContext.Provider
       value={{
@@ -123,8 +94,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         addToCart,
         removeFromCart,
         removeOneFromCart,
-        saveCart,
-        loadCart,
         getTotalCost,
       }}
     >
