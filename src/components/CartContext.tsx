@@ -36,12 +36,15 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     // Load cart from cookies when component mounts
     const savedCart = Cookies.get("cart");
     if (savedCart) {
-      setCart(JSON.parse(savedCart));
+      const parsedCart = JSON.parse(savedCart);
+      console.log("Cart loaded from cookies:", parsedCart);
+      setCart(parsedCart);
     }
   }, []);
 
   useEffect(() => {
     // Save cart to cookies whenever it changes
+    console.log("Cart saved to cookies:", cart);
     Cookies.set("cart", JSON.stringify(cart), { expires: 7, sameSite: "Lax" });
   }, [cart]);
 
@@ -49,32 +52,44 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     setCart((prevCart) => {
       const existingProduct = prevCart.find((item) => item.id === product.id);
       if (existingProduct) {
-        return prevCart.map((item) =>
+        const updatedCart = prevCart.map((item) =>
           item.id === product.id
             ? { ...item, quantity: (item.quantity || 1) + 1 }
             : item
         );
+        console.log("Product quantity updated:", updatedCart);
+        return updatedCart;
       } else {
-        return [...prevCart, { ...product, quantity: 1 }];
+        const newCart = [...prevCart, { ...product, quantity: 1 }];
+        console.log("Product added to cart:", newCart);
+        return newCart;
       }
     });
   };
 
   const removeFromCart = (productId: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter((item) => item.id !== productId);
+      console.log("Product removed from cart:", updatedCart);
+      return updatedCart;
+    });
   };
 
   const removeOneFromCart = (productId: number) => {
     setCart((prevCart) => {
       const product = prevCart.find((item) => item.id === productId);
       if (product && product.quantity && product.quantity > 1) {
-        return prevCart.map((item) =>
+        const updatedCart = prevCart.map((item) =>
           item.id === productId
             ? { ...item, quantity: item.quantity! - 1 }
             : item
         );
+        console.log("Product quantity decreased:", updatedCart);
+        return updatedCart;
       }
-      return prevCart.filter((item) => item.id !== productId);
+      const newCart = prevCart.filter((item) => item.id !== productId);
+      console.log("Product removed from cart as quantity is 0:", newCart);
+      return newCart;
     });
   };
 
