@@ -69,14 +69,31 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   // Function to save cart to cookies
   const saveCart = () => {
-    Cookies.set("cart", JSON.stringify(cart), { expires: 7 }); // Expires in 7 days
+    try {
+      Cookies.set("cart", JSON.stringify(cart), {
+        expires: 7,
+        path: "/",
+        secure: true,
+        sameSite: "Lax",
+      });
+      console.log("Cart saved to cookies:", JSON.stringify(cart));
+    } catch (error) {
+      console.error("Error saving cart to cookies:", error);
+    }
   };
 
   // Function to load cart from cookies
   const loadCart = () => {
-    const cartFromCookies = Cookies.get("cart");
-    if (cartFromCookies) {
-      setCart(JSON.parse(cartFromCookies));
+    try {
+      const cartFromCookies = Cookies.get("cart");
+      if (cartFromCookies) {
+        setCart(JSON.parse(cartFromCookies));
+        console.log("Cart loaded from cookies:", JSON.parse(cartFromCookies));
+      } else {
+        console.log("No cart found in cookies");
+      }
+    } catch (error) {
+      console.error("Error loading cart from cookies:", error);
     }
   };
 
