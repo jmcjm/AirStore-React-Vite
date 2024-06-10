@@ -5,6 +5,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
+import Cookies from "js-cookie";
 
 interface AirProducts {
   id: number;
@@ -25,7 +26,7 @@ interface CartContextType {
 }
 
 interface CartProviderProps {
-  children: ReactNode; // Typ dla children
+  children: ReactNode;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -62,39 +63,20 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
             : item
         );
       }
-      return prevCart;
+      return prevCart.filter((item) => item.id !== productId);
     });
   };
 
-  // Function to save cart to server
-  const saveCart = async () => {
-    try {
-      const response = await fetch("/api/saveCart", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(cart),
-      });
-      if (!response.ok) {
-        throw new Error("Failed to save cart");
-      }
-    } catch (error) {
-      console.error("Error saving cart:", error);
-    }
+  // Function to save cart to cookies
+  const saveCart = () => {
+    Cookies.set("cart", JSON.stringify(cart), { expires: 7 }); // Expires in 7 days
   };
 
-  // Function to load cart from server
-  const loadCart = async () => {
-    try {
-      const response = await fetch("/api/loadCart");
-      if (!response.ok) {
-        throw new Error("Failed to load cart");
-      }
-      const data = await response.json();
-      setCart(data);
-    } catch (error) {
-      console.error("Error loading cart:", error);
+  // Function to load cart from cookies
+  const loadCart = () => {
+    const cartFromCookies = Cookies.get("cart");
+    if (cartFromCookies) {
+      setCart(JSON.parse(cartFromCookies));
     }
   };
 
@@ -108,13 +90,13 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    // Load cart from server when component mounts
-    //loadCart();
+    // Load cart from cookies when component mounts
+    loadCart();
   }, []);
 
   useEffect(() => {
-    // Save cart to server whenever it changes
-    //saveCart();
+    // Save cart to cookies whenever it changes
+    saveCart();
   }, [cart]);
 
   return (
