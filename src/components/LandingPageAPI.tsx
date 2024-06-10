@@ -45,7 +45,8 @@ const LandingPageProductList: React.FC = () => {
   const { addToCart } = useCart();
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
-  const [products, setProducts] = useState<LandingPageProduct[]>(defaultProducts);
+  const [products, setProducts] =
+    useState<LandingPageProduct[]>(defaultProducts);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -54,7 +55,7 @@ const LandingPageProductList: React.FC = () => {
         const productPromises = productIds.map((id) => fetchProductByID(id));
         const fetchedProducts = await Promise.all(productPromises);
 
-        if (fetchedProducts.some(product => product)) {
+        if (fetchedProducts.some((product) => product)) {
           const updatedProducts = fetchedProducts
             .filter((product) => product !== null) // Remove null values
             .map((product) => {
@@ -90,8 +91,7 @@ const LandingPageProductList: React.FC = () => {
   }, []);
 
   const handleAddToCart = (product: LandingPageProduct) => {
-    const productWithQuantity = { ...product, quantity: 1 };
-    addToCart(productWithQuantity);
+    addToCart(product.id);
     setAddedToCart(product.id);
     setTimeout(() => setAddedToCart(null), 600);
   };

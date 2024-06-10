@@ -7,61 +7,66 @@ import React, {
 } from "react";
 import Cookies from "js-cookie";
 
-interface AirProducts {
+interface CartItem {
   id: number;
-  name: string;
-  price: number;
-  image: string;
   quantity: number;
 }
 
 interface CartContextType {
-  cart: AirProducts[];
-  addToCart: (product: AirProducts) => void;
+  cart: CartItem[];
+  addToCart: (productId: number) => void;
   removeFromCart: (productId: number) => void;
   removeOneFromCart: (productId: number) => void;
-  getTotalCost: () => number;
 }
 
 interface CartProviderProps {
-  children: ReactNode; // Typ dla children
+  children: ReactNode;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<AirProducts[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartLoaded, setCartLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    // Load cart from cookies when component mounts
-    const savedCart = Cookies.get("cart");
-    console.log("Attempting to load cart from cookies:", savedCart);
-    if (savedCart) {
-      const parsedCart = JSON.parse(savedCart);
-      console.log("Cart loaded from cookies:", parsedCart);
-      setCart(parsedCart);
+    if (!cartLoaded) {
+      setCartLoaded(true);
+      // Load cart from cookies when component mounts
+      const savedCart = Cookies.get("cart");
+      console.log("Attempting to load cart from cookies:", savedCart);
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        console.log("Cart loaded from cookies:", parsedCart);
+        setCart(parsedCart);
+      }
     }
-  }, []);
+  }, [cartLoaded]);
 
   useEffect(() => {
-    // Save cart to cookies whenever it changes
-    console.log("Cart saved to cookies:", cart);
-    Cookies.set("cart", JSON.stringify(cart), { expires: 7, sameSite: "Lax" });
-  }, [cart]);
+    if (cartLoaded) {
+      // Save cart to cookies whenever it changes
+      console.log("Cart saved to cookies:", cart);
+      Cookies.set("cart", JSON.stringify(cart), {
+        expires: 7,
+        sameSite: "Lax",
+      });
+    }
+  }, [cart, cartLoaded]);
 
-  const addToCart = (product: AirProducts) => {
+  const addToCart = (productId: number) => {
     setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item.id === product.id);
+      const existingProduct = prevCart.find((item) => item.id === productId);
       if (existingProduct) {
         const updatedCart = prevCart.map((item) =>
-          item.id === product.id
-            ? { ...item, quantity: (item.quantity || 1) + 1 }
+          item.id === productId
+            ? { ...item, quantity: item.quantity + 1 }
             : item
         );
         console.log("Product quantity updated:", updatedCart);
         return updatedCart;
       } else {
-        const newCart = [...prevCart, { ...product, quantity: 1 }];
+        const newCart = [...prevCart, { id: productId, quantity: 1 }];
         console.log("Product added to cart:", newCart);
         return newCart;
       }
@@ -79,10 +84,10 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const removeOneFromCart = (productId: number) => {
     setCart((prevCart) => {
       const product = prevCart.find((item) => item.id === productId);
-      if (product && product.quantity && product.quantity > 1) {
+      if (product && product.quantity > 1) {
         const updatedCart = prevCart.map((item) =>
           item.id === productId
-            ? { ...item, quantity: item.quantity! - 1 }
+            ? { ...item, quantity: item.quantity - 1 }
             : item
         );
         console.log("Product quantity decreased:", updatedCart);
@@ -94,15 +99,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     });
   };
 
-  // Function to get total cost of cart
-  const getTotalCost = () => {
-    const totalCost = cart.reduce(
-      (total, product) => total + product.price * product.quantity,
-      0
-    );
-    return parseFloat(totalCost.toFixed(2));
-  };
-
   return (
     <CartContext.Provider
       value={{
@@ -110,7 +106,6 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
         addToCart,
         removeFromCart,
         removeOneFromCart,
-        getTotalCost,
       }}
     >
       {children}

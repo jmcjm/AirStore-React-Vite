@@ -2,13 +2,16 @@ import { Row, Col, Button, Container, Stack } from "react-bootstrap/";
 import React, { useContext, useState, useEffect } from "react";
 import { useCart } from "./CartContext";
 import { NavbarContext } from "../NavbarContext";
+import { fetchProductByID, AirProducts } from "./ApiConn"; // Import the fetch function and type
 import "../index.css";
 
 const CartPage: React.FC = () => {
-  const { cart, addToCart, removeFromCart, removeOneFromCart, getTotalCost } =
-    useCart();
+  const { cart, addToCart, removeFromCart, removeOneFromCart } = useCart();
   const { availableHeight } = useContext(NavbarContext);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
+  const [products, setProducts] = useState<
+    (AirProducts & { quantity: number })[]
+  >([]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,6 +24,31 @@ const CartPage: React.FC = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      const productDetails = await Promise.all(
+        cart.map(async (item) => {
+          const product = await fetchProductByID(item.id);
+          return product ? { ...product, quantity: item.quantity } : null;
+        })
+      );
+      const validProducts = productDetails.filter(
+        (product) => product !== null
+      ) as (AirProducts & { quantity: number })[];
+      setProducts(validProducts);
+    };
+
+    fetchProducts();
+  }, [cart]);
+
+  const getTotalCost = () => {
+    const totalCost = products.reduce(
+      (total, product) => total + product.price * product.quantity,
+      0
+    );
+    return parseFloat(totalCost.toFixed(2));
+  };
 
   return (
     <Container
@@ -44,10 +72,10 @@ const CartPage: React.FC = () => {
           </Col>
         </Row>
         <Row>
-          {cart.length !== 0 && (
+          {products.length !== 0 && (
             <>
               <Col xs={isMobile ? 15 : 7}>
-                {cart.map((item, index) => (
+                {products.map((item, index) => (
                   <div
                     key={index}
                     className={`d-flex CartProductBox rounded ${
@@ -88,7 +116,7 @@ const CartPage: React.FC = () => {
                           <Button
                             variant="light"
                             className="p-1"
-                            onClick={() => addToCart(item)}
+                            onClick={() => addToCart(item.id)}
                           >
                             +
                           </Button>
@@ -108,8 +136,14 @@ const CartPage: React.FC = () => {
                 ))}
               </Col>
               {isMobile && (
-                <Col xs={15} style={{ marginTop: "-10px", marginBottom: "-15px" }}>
-                  <hr className="rounded" style={{ borderWidth: "7px", color: "white" }} />
+                <Col
+                  xs={15}
+                  style={{ marginTop: "-10px", marginBottom: "-15px" }}
+                >
+                  <hr
+                    className="rounded"
+                    style={{ borderWidth: "7px", color: "white" }}
+                  />
                 </Col>
               )}
               <Col>

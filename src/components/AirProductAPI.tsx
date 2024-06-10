@@ -80,7 +80,9 @@ function AirProductList({ productType }: ListForType) {
   const initialProducts = productType === 1 ? productsType1 : productsType2;
 
   const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
-  const [isMobileSuperThin, setIsMobileSuperThin] = useState(window.innerWidth < 450);
+  const [isMobileSuperThin, setIsMobileSuperThin] = useState(
+    window.innerWidth < 450
+  );
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
   const { addToCart } = useCart();
   const [products, setProducts] = useState<AirProduct[]>(initialProducts);
@@ -100,8 +102,7 @@ function AirProductList({ productType }: ListForType) {
   }, []);
 
   const handleAddToCart = (product: AirProduct) => {
-    const productWithQuantity = { ...product, quantity: 1 };
-    addToCart(productWithQuantity);
+    addToCart(product.id);
     setAddedToCart(product.id);
     setTimeout(() => setAddedToCart(null), 600);
   };
@@ -127,9 +128,7 @@ function AirProductList({ productType }: ListForType) {
           key={product.id}
           className={`product-box product-box-mobile rounded text-dark d-flex flex-column justify-content-around ${
             isMobile ? "product-box-mobile-narrow" : ""
-          } ${
-            isMobileSuperThin ? "product-box-mobile-super-narrow" : ""
-          }`}
+          } ${isMobileSuperThin ? "product-box-mobile-super-narrow" : ""}`}
         >
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
