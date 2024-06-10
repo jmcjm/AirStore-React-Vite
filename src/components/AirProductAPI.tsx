@@ -3,6 +3,7 @@ import { useCart } from "./CartContext";
 import { Row, Col, Button, Container } from "react-bootstrap/";
 import { fetchProductsByType } from "./ApiConn";
 import { AirPhoneB64 } from "../assets/AirPhoneB64";
+import { AirTabB64 } from "../assets/AirTabB64";
 
 interface AirProduct {
   id: number;
@@ -83,6 +84,7 @@ function AirProductList({ productType }: ListForType) {
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
   const { addToCart } = useCart();
   const [products, setProducts] = useState<AirProduct[]>(initialProducts);
+  const AirProductPhoto = productType === 1 ? AirPhoneB64 : AirTabB64; // waiting on api implementation od product images
 
   useEffect(() => {
     const handleResize = () => {
@@ -132,7 +134,7 @@ function AirProductList({ productType }: ListForType) {
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
               <img
-                src={`data:image/jpeg;base64,${AirPhoneB64}`} // src={product.image} waiting on API images implementation
+                src={`data:image/jpeg;base64,${AirProductPhoto}`} // src={product.image} waiting on API images implementation
                 alt={product.name}
                 className="product-image"
                 style={{ height: "150px" }}
