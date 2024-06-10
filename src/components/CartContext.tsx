@@ -35,6 +35,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   useEffect(() => {
     // Load cart from cookies when component mounts
     const savedCart = Cookies.get("cart");
+    console.log("Attempting to load cart from cookies:", savedCart);
     if (savedCart) {
       const parsedCart = JSON.parse(savedCart);
       console.log("Cart loaded from cookies:", parsedCart);
