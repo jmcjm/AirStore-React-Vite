@@ -33,20 +33,21 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const [cart, setCart] = useState<AirProducts[]>([]);
 
   useEffect(() => {
+    // Load cart from cookies when component mounts
     const savedCart = Cookies.get("cart");
     console.log("Attempting to load cart from cookies:", savedCart);
-    if (savedCart && JSON.stringify(cart) !== savedCart) {
+    if (savedCart) {
       const parsedCart = JSON.parse(savedCart);
       console.log("Cart loaded from cookies:", parsedCart);
       setCart(parsedCart);
     }
-  }, [cart]); // Dodajemy [cart] jako zależność, aby useEffect został uruchomiony tylko wtedy, gdy wartość koszyka się zmieni.
-  
+  }, []);
+
   useEffect(() => {
+    // Save cart to cookies whenever it changes
     console.log("Cart saved to cookies:", cart);
     Cookies.set("cart", JSON.stringify(cart), { expires: 7, sameSite: "Lax" });
-  }, [cart]); // Podobnie, [cart] jako zależność, aby useEffect został uruchomiony tylko wtedy, gdy wartość koszyka się zmieni.
-  
+  }, [cart]);
 
   const addToCart = (product: AirProducts) => {
     setCart((prevCart) => {
