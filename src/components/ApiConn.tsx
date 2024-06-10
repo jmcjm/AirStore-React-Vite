@@ -1,5 +1,3 @@
-// src/api.ts
-
 export interface AirProducts {
   id: number;
   name: string;
