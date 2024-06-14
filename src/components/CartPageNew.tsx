@@ -1,5 +1,5 @@
-import { Row, Col, Button, Container, Stack } from "react-bootstrap/";
-import React, { useContext, useState, useEffect } from "react";
+import { Row, Col, Button, Container, Stack, Modal, Form } from "react-bootstrap/";
+import React, { useContext, useState, useEffect, ChangeEvent } from "react";
 import { useCart } from "./CartContext";
 import { NavbarContext } from "../NavbarContext";
 import { fetchProductByID, AirProducts } from "./ApiConn"; // Import the fetch function and type
@@ -9,9 +9,8 @@ const CartPage: React.FC = () => {
   const { cart, addToCart, removeFromCart, removeOneFromCart } = useCart();
   const { availableHeight } = useContext(NavbarContext);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
-  const [products, setProducts] = useState<
-    (AirProducts & { quantity: number })[]
-  >([]);
+  const [products, setProducts] = useState<(AirProducts & { quantity: number })[]>([]);
+  const [showModal, setShowModal] = useState(false); // State for modal visibility
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,6 +47,13 @@ const CartPage: React.FC = () => {
       0
     );
     return parseFloat(totalCost.toFixed(2));
+  };
+
+  // Function to handle max length for card number and CVV
+  const handleMaxLength = (e: ChangeEvent<HTMLInputElement>, maxLength: number) => {
+    if (e.target.value.length > maxLength) {
+      e.target.value = e.target.value.slice(0, maxLength);
+    }
   };
 
   return (
@@ -178,11 +184,139 @@ const CartPage: React.FC = () => {
                     </Col>
                   </Row>
                 </div>
+                <Button variant="white" onClick={() => setShowModal(true)}>
+                  Checkout
+                </Button>
               </Col>
             </>
           )}
         </Row>
       </Container>
+
+      {/* Modal for Checkout */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Checkout</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridCountry">
+                <Form.Label>Country</Form.Label>
+                <Form.Select aria-label="Select country from list" required>
+                  <option value="">Select a country...</option>
+                  <option value="Austria">Austria</option>
+                  <option value="Belgium">Belgium</option>
+                  <option value="Bulgaria">Bulgaria</option>
+                  <option value="Croatia">Croatia</option>
+                  <option value="Cyprus">Cyprus</option>
+                  <option value="Czech Republic">Czech Republic</option>
+                  <option value="Denmark">Denmark</option>
+                  <option value="Estonia">Estonia</option>
+                  <option value="Finland">Finland</option>
+                  <option value="France">France</option>
+                  <option value="Germany">Germany</option>
+                  <option value="Greece">Greece</option>
+                  <option value="Hungary">Hungary</option>
+                  <option value="Iceland">Iceland</option>
+                  <option value="Ireland">Ireland</option>
+                  <option value="Italy">Italy</option>
+                  <option value="Latvia">Latvia</option>
+                  <option value="Liechtenstein">Liechtenstein</option>
+                  <option value="Lithuania">Lithuania</option>
+                  <option value="Luxembourg">Luxembourg</option>
+                  <option value="Malta">Malta</option>
+                  <option value="Netherlands">Netherlands</option>
+                  <option value="Norway">Norway</option>
+                  <option value="Poland">Poland</option>
+                  <option value="Portugal">Portugal</option>
+                  <option value="Romania">Romania</option>
+                  <option value="Slovakia">Slovakia</option>
+                  <option value="Slovenia">Slovenia</option>
+                  <option value="Spain">Spain</option>
+                  <option value="Sweden">Sweden</option>
+                </Form.Select>
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridCity">
+                <Form.Label>City</Form.Label>
+                <Form.Control type="text" placeholder="Enter city name" required />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridPostalCode">
+                <Form.Label>Postal Code</Form.Label>
+                <Form.Control type="text" placeholder="Enter postal code" required />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridStreet">
+                <Form.Label>Street</Form.Label>
+                <Form.Control type="text" placeholder="Enter street name" required />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridBuildingNumber">
+                <Form.Label>Building Number</Form.Label>
+                <Form.Control type="text" placeholder="Enter building number" required />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridApartmentNumber">
+                <Form.Label>Apartment Number</Form.Label>
+                <Form.Control type="text" placeholder="Enter apartment number (optional)" />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridCardNumber">
+                <Form.Label>Card Number</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  placeholder="Enter card number" 
+                  inputMode="numeric" 
+                  pattern="\d*" 
+                  maxLength={16} 
+                  onInput={(e: ChangeEvent<HTMLInputElement>) => handleMaxLength(e, 16)}
+                  required
+                />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridExpiration">
+                <Form.Label>Expiration Date</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  placeholder="MM/YY" 
+                  pattern="\d{2}/\d{2}" 
+                  maxLength={5} 
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridCVV">
+                <Form.Label>CVV</Form.Label>
+                <Form.Control 
+                  type="text" 
+                  placeholder="CVV" 
+                  inputMode="numeric" 
+                  pattern="\d*" 
+                  maxLength={3} 
+                  onInput={(e: ChangeEvent<HTMLInputElement>) => handleMaxLength(e, 4)}
+                  required
+                />
+              </Form.Group>
+            </Row>
+
+            <Button variant="dark" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

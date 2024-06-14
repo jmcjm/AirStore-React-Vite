@@ -28,7 +28,7 @@ function LandingPage() {
       style={{
         backgroundImage: "url('https://www.roadtovr.com/wp-content/uploads/2021/05/spectacles-ar-glasses-2.jpg')",
         height: `40vh`, //musi tu byc cokolwiek bo inaczej wysokosci na Row nie dzialaja na %, i tak minHeight to nadpisuje
-        minHeight: `${availableHeight}px`,
+        minHeight: `${availableHeight}px`, //there is sitll a problem with screens smaller then 500px verically, but dunno how to fix it rn
         position: "fixed",
         backgroundPosition: "center",
         width: "100%",
