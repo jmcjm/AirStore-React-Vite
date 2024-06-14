@@ -19,6 +19,10 @@ const CartPage: React.FC = () => {
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 770);
+      if (cartSummaryRef.current && checkoutButtonRef.current) {
+        const cartSummaryWidth = cartSummaryRef.current.offsetWidth;
+        checkoutButtonRef.current.style.width = `${cartSummaryWidth}px`;
+      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -61,10 +65,7 @@ const CartPage: React.FC = () => {
   };
 
   useEffect(() => {
-    if (cartSummaryRef.current && checkoutButtonRef.current) {
-      const cartSummaryWidth = cartSummaryRef.current.offsetWidth;
-      checkoutButtonRef.current.style.width = `${cartSummaryWidth}px`;
-    }
+
   }, [products, isMobile]);
 
   return (
