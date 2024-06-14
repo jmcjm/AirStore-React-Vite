@@ -1,5 +1,5 @@
 import { Row, Col, Button, Container, Stack, Modal, Form } from "react-bootstrap/";
-import React, { useContext, useState, useEffect, ChangeEvent } from "react";
+import React, { useContext, useState, useEffect, ChangeEvent, useRef } from "react";
 import { useCart } from "./CartContext";
 import { NavbarContext } from "../NavbarContext";
 import { fetchProductByID, AirProducts } from "./ApiConn"; // Import the fetch function and type
@@ -11,6 +11,10 @@ const CartPage: React.FC = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
   const [products, setProducts] = useState<(AirProducts & { quantity: number })[]>([]);
   const [showModal, setShowModal] = useState(false); // State for modal visibility
+
+  // Refs for CartSummary and Checkout Button
+  const cartSummaryRef = useRef<HTMLDivElement>(null);
+  const checkoutButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,6 +59,13 @@ const CartPage: React.FC = () => {
       e.target.value = e.target.value.slice(0, maxLength);
     }
   };
+
+  useEffect(() => {
+    if (cartSummaryRef.current && checkoutButtonRef.current) {
+      const cartSummaryWidth = cartSummaryRef.current.offsetWidth;
+      checkoutButtonRef.current.style.width = `${cartSummaryWidth}px`;
+    }
+  }, [products, isMobile]);
 
   return (
     <Container
@@ -154,6 +165,7 @@ const CartPage: React.FC = () => {
               )}
               <Col>
                 <div
+                  ref={cartSummaryRef}
                   className={`CartSummary rounded ${
                     isMobile ? "CartSummaryMobileFix" : ""
                   }`}
@@ -184,7 +196,11 @@ const CartPage: React.FC = () => {
                     </Col>
                   </Row>
                 </div>
-                <Button variant="white" onClick={() => setShowModal(true)}>
+                <Button
+                  ref={checkoutButtonRef}
+                  variant="light"
+                  onClick={() => setShowModal(true)}
+                >
                   Checkout
                 </Button>
               </Col>
