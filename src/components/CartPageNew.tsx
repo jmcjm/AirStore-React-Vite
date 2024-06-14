@@ -310,13 +310,13 @@ const CartPage: React.FC = () => {
                 />
               </Form.Group>
             </Row>
-            <Modal.Footer>
-              <Button variant="dark" type="submit">
-                Submit
-              </Button>
-            </Modal.Footer>
           </Form>
         </Modal.Body>
+        <Modal.Footer>
+          <Button variant="dark" type="submit">
+            Submit
+          </Button>
+        </Modal.Footer>
       </Modal>
     </Container>
   );
