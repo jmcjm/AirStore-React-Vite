@@ -167,12 +167,10 @@ const NavBar: React.FC = () => {
       <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>
         <Modal.Header
           closeButton
-          data-bs-theme="dark"
-          className="bg-dark text-light"
         >
           <Modal.Title>Log in</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-dark text-light">
+        <Modal.Body >
           <form>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
@@ -202,11 +200,11 @@ const NavBar: React.FC = () => {
             </div>
           </form>
         </Modal.Body>
-        <Modal.Footer className="bg-dark">
+        <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowLoginModal(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleLogin}>
+          <Button variant="dark" onClick={handleLogin}>
             Log in
           </Button>
         </Modal.Footer>
@@ -216,12 +214,10 @@ const NavBar: React.FC = () => {
       <Modal show={showSignUpModal} onHide={() => setShowSignUpModal(false)}>
         <Modal.Header
           closeButton
-          data-bs-theme="dark"
-          className="bg-dark text-light"
         >
           <Modal.Title>Sign up</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="bg-dark text-light">
+        <Modal.Body >
           <form>
             <div className="mb-3">
               <label htmlFor="signup-first-name" className="form-label">
@@ -269,11 +265,11 @@ const NavBar: React.FC = () => {
             </div>
           </form>
         </Modal.Body>
-        <Modal.Footer className="bg-dark">
+        <Modal.Footer>
           <Button variant="secondary" onClick={() => setShowSignUpModal(false)}>
             Close
           </Button>
-          <Button variant="primary" onClick={handleSignUp}>
+          <Button variant="dark" onClick={handleSignUp}>
             Sign up
           </Button>
         </Modal.Footer>
