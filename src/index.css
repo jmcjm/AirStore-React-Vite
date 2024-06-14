@@ -123,3 +123,6 @@ body {
 .CartSummaryMobileFix {
     margin: 30px;
 }
+.checkoutButton {
+    width: cacl(100%-20px);
+}

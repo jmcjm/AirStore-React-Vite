@@ -1,5 +1,5 @@
 import { Row, Col, Button, Container, Stack, Modal, Form } from "react-bootstrap/";
-import React, { useContext, useState, useEffect, ChangeEvent, useRef } from "react";
+import React, { useContext, useState, useEffect, ChangeEvent } from "react";
 import { useCart } from "./CartContext";
 import { NavbarContext } from "../NavbarContext";
 import { fetchProductByID, AirProducts } from "./ApiConn"; // Import the fetch function and type
@@ -12,17 +12,9 @@ const CartPage: React.FC = () => {
   const [products, setProducts] = useState<(AirProducts & { quantity: number })[]>([]);
   const [showModal, setShowModal] = useState(false); // State for modal visibility
 
-  // Refs for CartSummary and Checkout Button
-  const cartSummaryRef = useRef<HTMLDivElement>(null);
-  const checkoutButtonRef = useRef<HTMLButtonElement>(null);
-
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth < 770);
-      if (cartSummaryRef.current && checkoutButtonRef.current) {
-        const cartSummaryWidth = cartSummaryRef.current.offsetWidth;
-        checkoutButtonRef.current.style.width = `${cartSummaryWidth}px`;
-      }
     };
 
     window.addEventListener("resize", handleResize);
@@ -63,10 +55,6 @@ const CartPage: React.FC = () => {
       e.target.value = e.target.value.slice(0, maxLength);
     }
   };
-
-  useEffect(() => {
-
-  }, [products, isMobile]);
 
   return (
     <Container
@@ -166,7 +154,6 @@ const CartPage: React.FC = () => {
               )}
               <Col>
                 <div
-                  ref={cartSummaryRef}
                   className={`CartSummary rounded ${
                     isMobile ? "CartSummaryMobileFix" : ""
                   }`}
@@ -197,11 +184,7 @@ const CartPage: React.FC = () => {
                     </Col>
                   </Row>
                 </div>
-                <Button
-                  ref={checkoutButtonRef}
-                  variant="light"
-                  onClick={() => setShowModal(true)}
-                >
+                <Button className="checkoutButton" variant="light" onClick={() => setShowModal(true)}>
                   Checkout
                 </Button>
               </Col>
