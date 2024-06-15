@@ -290,6 +290,7 @@ const NavBar: React.FC = () => {
           autohide
         >
           <Toast.Header>
+            <strong className="me-auto">AirStore</strong>
             <small>Just now</small>
           </Toast.Header>
           <Toast.Body className="text-light">{toastMessage}</Toast.Body>
