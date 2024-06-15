@@ -1,10 +1,17 @@
+//this file is a kind of a monster, would need to be completely rewrite and split into different more job-oriented files
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Modal, Button, Toast, ToastContainer } from "react-bootstrap";
 import Logo from "../assets/Base64Logo";
 import { Link, useLocation } from "react-router-dom";
 import { NavbarContext } from "../NavbarContext";
 import { login, register } from "./ApiConn";
+import Cookies from "js-cookie";
 import "../index.css";
+
+interface UserCookies {
+  cookiesUsername: string;
+  cookiesPassword: string;
+}
 
 const NavBar: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
@@ -12,9 +19,7 @@ const NavBar: React.FC = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
-    !!localStorage.getItem("token")
-  );
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
   const { navbarHeight } = useContext(NavbarContext);
@@ -26,7 +31,7 @@ const NavBar: React.FC = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLogin = async () => {
+  const handleLogin = async (username: string, password: string) => {
     try {
       const response = await login(username, password);
       console.log("Login successful:", response);
@@ -34,6 +39,11 @@ const NavBar: React.FC = () => {
       setShowLoginModal(false);
       setToastMessage("Login successful!");
       setShowToast(true);
+      const userLoggedinCookies: UserCookies[] = [{ cookiesUsername: username, cookiesPassword: password }];
+      Cookies.set("login", JSON.stringify(userLoggedinCookies), {
+        expires: 7,
+        sameSite: "Lax",
+      });
     } catch (error) {
       console.error("Login failed:", error);
       setToastMessage("Login failed!");
@@ -43,6 +53,7 @@ const NavBar: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    Cookies.remove("login");
     setIsLoggedIn(false);
   };
 
@@ -74,6 +85,18 @@ const NavBar: React.FC = () => {
     }
   };
 
+  // Check for login cookies and log in the user automatically if found
+  useEffect(() => {
+    const cookies = Cookies.get("login");
+    if (cookies) {
+      const parsedCookies: UserCookies[] = JSON.parse(cookies);
+      if (parsedCookies.length > 0) {
+        const { cookiesUsername, cookiesPassword } = parsedCookies[0];
+        handleLogin(cookiesUsername, cookiesPassword);
+      }
+    }
+  }, []);
+
   // Listen for route changes to close the menu
   useEffect(() => {
     if (navBarRef.current && window.innerWidth < 992) {
@@ -88,6 +111,11 @@ const NavBar: React.FC = () => {
       }
     }
   }, [location]);
+  
+  // Wrapper function to handle login button click
+  const handleLoginButtonClick = () => {
+    handleLogin(username, password); // Call handleLogin with current username and password
+  };
 
   return (
     <nav
@@ -217,7 +245,7 @@ const NavBar: React.FC = () => {
           <Button variant="secondary" onClick={() => setShowLoginModal(false)}>
             Close
           </Button>
-          <Button variant="dark" onClick={handleLogin}>
+          <Button variant="dark" onClick={handleLoginButtonClick}>
             Log in
           </Button>
         </Modal.Footer>
@@ -301,3 +329,4 @@ const NavBar: React.FC = () => {
 };
 
 export default NavBar;
+
