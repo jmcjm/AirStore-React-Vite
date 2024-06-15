@@ -52,7 +52,6 @@ const NavBar: React.FC = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
     Cookies.remove("login");
     setIsLoggedIn(false);
   };
@@ -71,6 +70,8 @@ const NavBar: React.FC = () => {
     }
   };
 
+
+  // Close the menu after click 
   const handleLinkClick = () => {
     if (navBarRef.current && window.innerWidth < 992) {
       const toggleButton = navBarRef.current.querySelector(
@@ -96,25 +97,10 @@ const NavBar: React.FC = () => {
       }
     }
   }, []);
-
-  // Listen for route changes to close the menu
-  useEffect(() => {
-    if (navBarRef.current && window.innerWidth < 992) {
-      const toggleButton = navBarRef.current.querySelector(
-        ".navbar-toggler"
-      ) as HTMLElement;
-      if (
-        toggleButton &&
-        toggleButton.getAttribute("aria-expanded") === "true"
-      ) {
-        toggleButton.click();
-      }
-    }
-  }, [location]);
   
   // Wrapper function to handle login button click
   const handleLoginButtonClick = () => {
-    handleLogin(username, password); // Call handleLogin with current username and password
+    handleLogin(username, password);
   };
 
   return (
