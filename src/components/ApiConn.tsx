@@ -51,10 +51,6 @@ interface LoginResponse {
   token: string;
 }
 
-interface LoginResponse {
-  token: string;
-}
-
 export const login = async (
   username: string,
   password: string
@@ -73,5 +69,30 @@ export const login = async (
   }
 
   const data: LoginResponse = await response.json();
+  return data;
+};
+
+interface RegisterResponse {
+  token: string;
+}
+
+export const register = async (
+  username: string,
+  email: string,
+  password: string
+): Promise<RegisterResponse> => {
+  const response = await fetch("/api/User/register", {
+    method: "POST",
+    headers: {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ username, email, password }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Registration failed");
+  }
+  const data: RegisterResponse = await response.json();
   return data;
 };

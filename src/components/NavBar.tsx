@@ -1,19 +1,22 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Toast, ToastContainer } from "react-bootstrap";
 import Logo from "../assets/Base64Logo";
 import { Link, useLocation } from "react-router-dom";
 import { NavbarContext } from "../NavbarContext";
-import { login } from "./ApiConn";
+import { login, register } from "./ApiConn";
 import "../index.css";
 
 const NavBar: React.FC = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(
     !!localStorage.getItem("token")
   );
+  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState("");
   const { navbarHeight } = useContext(NavbarContext);
   const [isOpen, setIsOpen] = useState(false);
   const navBarRef = useRef<HTMLDivElement>(null);
@@ -27,11 +30,10 @@ const NavBar: React.FC = () => {
     try {
       const response = await login(username, password);
       console.log("Login successful:", response);
-      setIsLoggedIn(true); // Set logged in state
+      setIsLoggedIn(true);
       setShowLoginModal(false);
     } catch (error) {
       console.error("Login failed:", error);
-      // Handle login failure (e.g., show error message)
     }
   };
 
@@ -40,9 +42,16 @@ const NavBar: React.FC = () => {
     setIsLoggedIn(false);
   };
 
-  const handleSignUp = () => {
-    // Handle sign up logic
-    setShowSignUpModal(false);
+  const handleSignUp = async () => {
+    try {
+      const response = await register(username, email, password);
+      console.log("Registration successful:", response);
+      setShowSignUpModal(false);
+      setToastMessage("Registration successful!");
+      setShowToast(true);
+    } catch (error) {
+      console.error("Registration failed:", error);
+    }
   };
 
   const handleLinkClick = () => {
@@ -165,12 +174,10 @@ const NavBar: React.FC = () => {
 
       {/* Login Modal */}
       <Modal show={showLoginModal} onHide={() => setShowLoginModal(false)}>
-        <Modal.Header
-          closeButton
-        >
+        <Modal.Header closeButton>
           <Modal.Title>Log in</Modal.Title>
         </Modal.Header>
-        <Modal.Body >
+        <Modal.Body>
           <form>
             <div className="mb-3">
               <label htmlFor="username" className="form-label">
@@ -212,32 +219,21 @@ const NavBar: React.FC = () => {
 
       {/* Sign Up Modal */}
       <Modal show={showSignUpModal} onHide={() => setShowSignUpModal(false)}>
-        <Modal.Header
-          closeButton
-        >
+        <Modal.Header closeButton>
           <Modal.Title>Sign up</Modal.Title>
         </Modal.Header>
-        <Modal.Body >
+        <Modal.Body>
           <form>
             <div className="mb-3">
               <label htmlFor="signup-first-name" className="form-label">
-                First name
+                Username
               </label>
               <input
                 type="text"
                 className="form-control"
-                id="signup-first-name"
-                required
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="signup-last-name" className="form-label">
-                Last name
-              </label>
-              <input
-                type="text"
-                className="form-control"
-                id="signup-last-name"
+                id="signup-username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
                 required
               />
             </div>
@@ -249,6 +245,8 @@ const NavBar: React.FC = () => {
                 type="email"
                 className="form-control"
                 id="signup-email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -260,6 +258,8 @@ const NavBar: React.FC = () => {
                 type="password"
                 className="form-control"
                 id="signup-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
@@ -274,6 +274,22 @@ const NavBar: React.FC = () => {
           </Button>
         </Modal.Footer>
       </Modal>
+
+      {/* Toast Notification */}
+      <ToastContainer position="top-end" className="p-3">
+        <Toast
+          onClose={() => setShowToast(false)}
+          show={showToast}
+          delay={3000}
+          autohide
+        >
+          <Toast.Header>
+            <strong className="me-auto">Notification</strong>
+            <small>Just now</small>
+          </Toast.Header>
+          <Toast.Body>{toastMessage}</Toast.Body>
+        </Toast>
+      </ToastContainer>
     </nav>
   );
 };
