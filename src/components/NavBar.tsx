@@ -32,8 +32,12 @@ const NavBar: React.FC = () => {
       console.log("Login successful:", response);
       setIsLoggedIn(true);
       setShowLoginModal(false);
+      setToastMessage("Login successful!");
+      setShowToast(true);
     } catch (error) {
       console.error("Login failed:", error);
+      setToastMessage("Login failed!");
+      setShowToast(true);
     }
   };
 
@@ -51,6 +55,8 @@ const NavBar: React.FC = () => {
       setShowToast(true);
     } catch (error) {
       console.error("Registration failed:", error);
+      setToastMessage("Registration failed!");
+      setShowToast(true);
     }
   };
 
@@ -276,18 +282,17 @@ const NavBar: React.FC = () => {
       </Modal>
 
       {/* Toast Notification */}
-      <ToastContainer position="top-end" className="p-3">
+      <ToastContainer position="top-center" className="p-3">
         <Toast
           onClose={() => setShowToast(false)}
           show={showToast}
-          delay={3000}
+          delay={4000}
           autohide
         >
           <Toast.Header>
-            <strong className="me-auto">Notification</strong>
             <small>Just now</small>
           </Toast.Header>
-          <Toast.Body>{toastMessage}</Toast.Body>
+          <Toast.Body className="text-light">{toastMessage}</Toast.Body>
         </Toast>
       </ToastContainer>
     </nav>
