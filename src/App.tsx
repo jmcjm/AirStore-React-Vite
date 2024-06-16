@@ -7,7 +7,7 @@ import AirGlass from "./components/AirGlass";
 import LandingPage from "./components/LandingPageNew";
 import CartPageNew from "./components/CartPageNew";
 import { CartProvider } from "./components/CartContext";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBarNew";
 
 const App: React.FC = () => {
   return (
