@@ -6,7 +6,7 @@ body {
 }
 
 /* NavBar logo */
-nav > .container-fluid > span > img {
+#navbar > div.container-fluid > a > img {
   height: 25px;
 }
 

@@ -85,7 +85,7 @@ const NavBar: React.FC = () => {
     //fully rewrote with react-bootstrap instead of pure bootstrap, now I have issues with page fully reloading when clicking links XD
     <Navbar bg="dark" data-bs-theme="dark" expand="md" id="navbar">
       <Container fluid>
-        <Navbar.Brand><Logo /> AirStore</Navbar.Brand>
+        <Navbar.Brand href="/"><Logo /> AirStore</Navbar.Brand>
         <Navbar.Toggle aria-controls="navbar-collapse" />
         <Navbar.Collapse id="navbar-collapse" className='justify-content-end'>
           <Nav>
