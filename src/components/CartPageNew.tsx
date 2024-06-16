@@ -1,4 +1,12 @@
-import { Row, Col, Button, Container, Stack, Modal, Form } from "react-bootstrap/";
+import {
+  Row,
+  Col,
+  Button,
+  Container,
+  Stack,
+  Modal,
+  Form,
+} from "react-bootstrap/";
 import React, { useContext, useState, useEffect, ChangeEvent } from "react";
 import { useCart } from "./CartContext";
 import { NavbarContext } from "../NavbarContext";
@@ -9,7 +17,9 @@ const CartPage: React.FC = () => {
   const { cart, addToCart, removeFromCart, removeOneFromCart } = useCart();
   const { availableHeight } = useContext(NavbarContext);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 770);
-  const [products, setProducts] = useState<(AirProducts & { quantity: number })[]>([]);
+  const [products, setProducts] = useState<
+    (AirProducts & { quantity: number })[]
+  >([]);
   const [showModal, setShowModal] = useState(false); // State for modal visibility
 
   useEffect(() => {
@@ -50,7 +60,10 @@ const CartPage: React.FC = () => {
   };
 
   // Function to handle max length for card number and CVV
-  const handleMaxLength = (e: ChangeEvent<HTMLInputElement>, maxLength: number) => {
+  const handleMaxLength = (
+    e: ChangeEvent<HTMLInputElement>,
+    maxLength: number
+  ) => {
     if (e.target.value.length > maxLength) {
       e.target.value = e.target.value.slice(0, maxLength);
     }
@@ -184,7 +197,13 @@ const CartPage: React.FC = () => {
                     </Col>
                   </Row>
                 </div>
-                <Button className="checkoutButton" variant="light" onClick={() => setShowModal(true)}>
+                <Button
+                  className={`checkoutButton ${
+                    isMobile ? "checkoutButtonMobile" : ""
+                  }`}
+                  variant="light"
+                  onClick={() => setShowModal(true)}
+                >
                   Checkout
                 </Button>
               </Col>
@@ -200,6 +219,44 @@ const CartPage: React.FC = () => {
         </Modal.Header>
         <Modal.Body>
           <Form>
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridFirstName">
+                <Form.Label>First name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your first name"
+                  required
+                />
+              </Form.Group>
+
+              <Form.Group as={Col} controlId="formGridLastName">
+                <Form.Label>Last name</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter your last name"
+                  required
+                />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="text" placeholder="Enter email" required />
+              </Form.Group>
+            </Row>
+
+            <Row className="mb-3">
+              <Form.Group as={Col} controlId="formGridTaxNumber">
+                <Form.Label>Tax Number</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Enter tax number (optional)"
+                  required
+                />
+              </Form.Group>
+            </Row>
+
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridCountry">
                 <Form.Label>Country</Form.Label>
@@ -242,44 +299,65 @@ const CartPage: React.FC = () => {
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridCity">
                 <Form.Label>City</Form.Label>
-                <Form.Control type="text" placeholder="Enter city name" required />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter city name"
+                  required
+                />
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridPostalCode">
                 <Form.Label>Postal Code</Form.Label>
-                <Form.Control type="text" placeholder="Enter postal code" required />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter postal code"
+                  required
+                />
               </Form.Group>
             </Row>
 
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridStreet">
                 <Form.Label>Street</Form.Label>
-                <Form.Control type="text" placeholder="Enter street name" required />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter street name"
+                  required
+                />
               </Form.Group>
             </Row>
 
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridBuildingNumber">
                 <Form.Label>Building Number</Form.Label>
-                <Form.Control type="text" placeholder="Enter building number" required />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter building number"
+                  required
+                />
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridApartmentNumber">
                 <Form.Label>Apartment Number</Form.Label>
-                <Form.Control type="text" placeholder="Enter apartment number (optional)" />
+                <Form.Control
+                  type="text"
+                  placeholder="Enter apartment number (optional)"
+                />
               </Form.Group>
             </Row>
 
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridCardNumber">
                 <Form.Label>Card Number</Form.Label>
-                <Form.Control 
-                  type="text" 
-                  placeholder="Enter card number" 
-                  inputMode="numeric" 
-                  pattern="\d*" 
-                  maxLength={16} 
-                  onInput={(e: ChangeEvent<HTMLInputElement>) => handleMaxLength(e, 16)}
+                <Form.Control
+                  type="text"
+                  placeholder="Enter card number"
+                  inputMode="numeric"
+                  pattern="\d*"
+                  maxLength={16}
+                  onInput={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleMaxLength(e, 16)
+                  }
                   required
                 />
               </Form.Group>
@@ -288,24 +366,26 @@ const CartPage: React.FC = () => {
             <Row className="mb-3">
               <Form.Group as={Col} controlId="formGridExpiration">
                 <Form.Label>Expiration Date</Form.Label>
-                <Form.Control 
-                  type="text" 
-                  placeholder="MM/YY" 
-                  pattern="\d{2}/\d{2}" 
-                  maxLength={5} 
+                <Form.Control
+                  type="text"
+                  placeholder="MM/YY"
+                  pattern="\d{2}/\d{2}"
+                  maxLength={5}
                   required
                 />
               </Form.Group>
 
               <Form.Group as={Col} controlId="formGridCVV">
                 <Form.Label>CVV</Form.Label>
-                <Form.Control 
-                  type="text" 
-                  placeholder="CVV" 
-                  inputMode="numeric" 
-                  pattern="\d*" 
-                  maxLength={3} 
-                  onInput={(e: ChangeEvent<HTMLInputElement>) => handleMaxLength(e, 4)}
+                <Form.Control
+                  type="text"
+                  placeholder="CVV"
+                  inputMode="numeric"
+                  pattern="\d*"
+                  maxLength={3}
+                  onInput={(e: ChangeEvent<HTMLInputElement>) =>
+                    handleMaxLength(e, 4)
+                  }
                   required
                 />
               </Form.Group>
