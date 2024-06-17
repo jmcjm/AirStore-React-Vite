@@ -3,6 +3,7 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Modal, Button, Toast, ToastContainer, Navbar, Nav, Container } from "react-bootstrap";
 import Logo from "../assets/Base64Logo";
+import { Link } from "react-router-dom";
 import { NavbarContext } from "../NavbarContext";
 import { login, register } from "./ApiConn";
 import Cookies from "js-cookie";
@@ -82,18 +83,18 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    //fully rewrote with react-bootstrap instead of pure bootstrap, now I have issues with page fully reloading when clicking links XD
+    //fully rewrote with react-bootstrap instead of pure bootstrap
     <Navbar bg="dark" data-bs-theme="dark" expand="md" id="navbar">
       <Container fluid>
-        <Navbar.Brand href="/"><Logo /> AirStore</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/"><Logo /> AirStore</Navbar.Brand> {/* it have to have the "as" in order to not cause full page reload*/}
         <Navbar.Toggle aria-controls="navbar-collapse" />
         <Navbar.Collapse id="navbar-collapse" className='justify-content-end'>
           <Nav>
-            <Nav.Link href="/airphone">AirPhone</Nav.Link>
-            <Nav.Link href="/airtab">AirTab</Nav.Link>
-            <Nav.Link href="/airglass">AirGlass</Nav.Link>
-            <Nav.Link href="/cart">🛒</Nav.Link>
-            <Container fluid className="m-0 p-0"> {/* buttons needs to be in container in order to don't take 100% width when navbar is collapsed */}
+            <Nav.Link as={Link} to="/airphone">AirPhone</Nav.Link>
+            <Nav.Link as={Link} to="/airtab">AirTab</Nav.Link>
+            <Nav.Link as={Link} to="/airglass">AirGlass</Nav.Link>
+            <Nav.Link as={Link} to="cart">🛒</Nav.Link>
+            <Container fluid className="m-0 p-0"> {/* buttons needs to be in a container in order to don't take up 100% width when navbar is collapsed */}
               {isLoggedIn ? (
                 <Button
                   variant="outline-light"

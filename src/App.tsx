@@ -15,7 +15,6 @@ const App: React.FC = () => {
       <NavbarProvider>
         <CartProvider>
           <NavBar />
-          <div>
             <Routes>
               <Route path="/" element={<LandingPage />} />
               <Route path="/airphone" element={<DefaultProductPage productType={1} />} />
@@ -23,7 +22,6 @@ const App: React.FC = () => {
               <Route path="/airglass" element={<AirGlass />} />
               <Route path="/cart" element={<CartPageNew />} />
             </Routes>
-          </div>
         </CartProvider>
       </NavbarProvider>
     </Router>
