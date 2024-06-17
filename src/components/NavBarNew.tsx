@@ -3,7 +3,7 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Modal, Button, Toast, ToastContainer, Navbar, Nav, Container } from "react-bootstrap";
 import Logo from "../assets/Base64Logo";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { NavbarContext } from "../NavbarContext";
 import { login, register } from "./ApiConn";
 import Cookies from "js-cookie";
@@ -84,14 +84,14 @@ const NavBar: React.FC = () => {
     // Fully rewrote with react-bootstrap instead of pure bootstrap (and now i don't now if it was worth it)
     <Navbar bg="dark" data-bs-theme="dark" expand="md" id="navbar" collapseOnSelect>
       <Container fluid>
-        <Navbar.Brand as={Link} to="/"><Logo /> AirStore</Navbar.Brand> {/* It have to have the "as" in order to not cause full page reload*/}
+        <Navbar.Brand><Nav.Link as={Link} eventKey="0" to="/"><Logo /> AirStore</Nav.Link></Navbar.Brand> {/* It have to have the "as" in order to not cause full page reload*/}
         <Navbar.Toggle aria-controls="navbar-collapse" />
         <Navbar.Collapse id="navbar-collapse" className='justify-content-end'>
           <Nav>
             <Nav.Link as={Link} eventKey="1" to="/airphone">AirPhone</Nav.Link> {/* "eventKey" makes the navbar auto hides after clicking link, basically it fixes what we have broken with "as" */}
-            <Nav.Link as={Link} eventKey="1" to="/airtab">AirTab</Nav.Link> {/* Theoretically we cloud also make <Link> inside <Nav.Link> and everything should be working */}
-            <Nav.Link as={Link} eventKey="1" to="/airglass">AirGlass</Nav.Link>
-            <Nav.Link as={Link} eventKey="1" to="cart" className="me-2">🛒</Nav.Link>
+            <Nav.Link as={Link} eventKey="2" to="/airtab">AirTab</Nav.Link> {/* Theoretically we cloud also make <Link> inside <Nav.Link> and everything should be working */}
+            <Nav.Link as={Link} eventKey="3" to="/airglass">AirGlass</Nav.Link>
+            <Nav.Link as={Link} eventKey="4" to="cart" className="me-2">🛒</Nav.Link>
             <Container fluid className="m-0 p-0"> {/* Buttons needs to be in a container in order to don't take up 100% width when navbar is collapsed */}
               {isLoggedIn ? (
                 <Button
