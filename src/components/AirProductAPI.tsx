@@ -1,9 +1,7 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from "./CartContext";
 import { Row, Col, Button, Container } from "react-bootstrap/";
-import { fetchProductsByType } from "./ApiConn";
-import { AirPhoneB64 } from "../assets/AirPhoneB64";
-import { AirTabB64 } from "../assets/AirTabB64";
+import { fetchProductsByType, fetchImagesByType } from "./ApiConn";
 
 interface AirProduct {
   id: number;
@@ -16,77 +14,15 @@ interface ListForType {
   productType: 1 | 2;
 }
 
-function AirProductList({ productType }: ListForType) {
-  const productsType1: AirProduct[] = [
-    {
-      id: 1,
-      name: "Product 1",
-      price: 19.99,
-      image: "",
-    },
-    {
-      id: 2,
-      name: "Product 2",
-      price: 29.99,
-      image: "",
-    },
-    {
-      id: 3,
-      name: "Product 3",
-      price: 39.99,
-      image: "",
-    },
-    {
-      id: 4,
-      name: "Product 4",
-      price: 49.99,
-      image: "",
-    },
-    {
-      id: 5,
-      name: "Product 5",
-      price: 59.99,
-      image: "",
-    },
-    {
-      id: 6,
-      name: "Product 6",
-      price: 69.99,
-      image: "",
-    },
-  ];
-
-  const productsType2: AirProduct[] = [
-    {
-      id: 40,
-      name: "Tab 4",
-      price: 49.99,
-      image: "",
-    },
-    {
-      id: 35,
-      name: "Tab 5",
-      price: 59.99,
-      image: "",
-    },
-    {
-      id: 63,
-      name: "Tab 6",
-      price: 69.99,
-      image: "",
-    },
-  ];
-
-  const initialProducts = productType === 1 ? productsType1 : productsType2;
-
+const AirProductList: React.FC<ListForType> = ({ productType }) => {
+  const initialProducts: AirProduct[] = [];
+  const { addToCart } = useCart();
   const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
   const [isMobileSuperThin, setIsMobileSuperThin] = useState(
     window.innerWidth < 450
   );
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
-  const { addToCart } = useCart();
   const [products, setProducts] = useState<AirProduct[]>(initialProducts);
-  const AirProductPhoto = productType === 1 ? AirPhoneB64 : AirTabB64; // waiting on api implementation od product images
 
   useEffect(() => {
     const handleResize = () => {
@@ -108,13 +44,32 @@ function AirProductList({ productType }: ListForType) {
   };
 
   useEffect(() => {
-    fetchProductsByType(productType).then((fetchedProducts) => {
-      if (fetchedProducts.length > 0) {
-        setProducts(fetchedProducts);
-      } else {
-        setProducts(productType === 1 ? productsType1 : productsType2);
+    const updateProductsWithImages = async () => {
+      try {
+        const fetchedProducts = await fetchProductsByType(productType);
+        const fetchedImages = await fetchImagesByType(productType);
+
+        if (fetchedProducts.length > 0) {
+          const productsWithImages = fetchedProducts.map((product) => {
+            const productImage = fetchedImages.find(
+              (image) => image.productId === product.id
+            );
+            return {
+              ...product,
+              image: productImage ? productImage.image : "",
+            };
+          });
+
+          setProducts(productsWithImages);
+        } else {
+          setProducts(initialProducts);
+        }
+      } catch (error) {
+        console.error("Error updating products with images:", error);
       }
-    });
+    };
+
+    updateProductsWithImages();
   }, [productType]);
 
   return (
@@ -133,7 +88,7 @@ function AirProductList({ productType }: ListForType) {
           <Row>
             <Col className="d-flex justify-content-center align-items-center">
               <img
-                src={`data:image/jpeg;base64,${AirProductPhoto}`} // src={product.image} waiting on API images implementation
+                src={`data:image/jpeg;base64,${product.image}`}
                 alt={product.name}
                 className="product-image"
                 style={{ height: "150px" }}
@@ -164,6 +119,6 @@ function AirProductList({ productType }: ListForType) {
       ))}
     </Container>
   );
-}
+};
 
 export default AirProductList;

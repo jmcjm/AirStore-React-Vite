@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useCart } from "./CartContext";
 import { Row, Col, Button, Container } from "react-bootstrap/";
-import { fetchProductByID } from "./ApiConn";
-import { AirTabB64 } from "../assets/AirTabB64";
-import { AirPhoneB64 } from "../assets/AirPhoneB64";
-import { AirWatchB64 } from "../assets/AirWatchB64";
+import { fetchProductByID, fetchImageByID } from "./ApiConn";
 import "../index.css";
 
 interface LandingPageProduct {
@@ -14,64 +11,39 @@ interface LandingPageProduct {
   image: string;
 }
 
-const defaultProducts: LandingPageProduct[] = [
-  {
-    id: 5,
-    name: "AirPhone 10 Pro",
-    price: 1099,
-    image: AirPhoneB64,
-  },
-  {
-    id: 7,
-    name: "AirWatch 5 Ultra",
-    price: 549,
-    image: AirWatchB64,
-  },
-  {
-    id: 9,
-    name: "AirTab 7 Pro Create",
-    price: 1399,
-    image: AirTabB64,
-  },
-];
-
 const LandingPageProductList: React.FC = () => {
-  const localImages = new Map<number, string>([
-    [5, AirPhoneB64],
-    [7, AirWatchB64],
-    [9, AirTabB64],
-  ]);
-
   const { addToCart } = useCart();
   const [addedToCart, setAddedToCart] = useState<number | null>(null);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 950);
-  const [products, setProducts] =
-    useState<LandingPageProduct[]>(defaultProducts);
+  const [products, setProducts] = useState<LandingPageProduct[]>([]);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
         const productIds = [5, 7, 9];
-        const productPromises = productIds.map((id) => fetchProductByID(id));
-        const fetchedProducts = await Promise.all(productPromises);
 
-        if (fetchedProducts.some((product) => product)) {
-          const updatedProducts = fetchedProducts
-            .filter((product) => product !== null) // Remove null values
-            .map((product) => {
-              const localImage = localImages.get(product!.id);
-              return {
-                ...product!,
-                image: localImage || product!.image, // Replace image if local
-              };
-            });
-          setProducts(updatedProducts as LandingPageProduct[]);
-        } else {
-          setProducts(defaultProducts); // Use default products if none fetched
-        }
+        const fetchProducts = async () => {
+          const productDetails = await Promise.all(
+            productIds.map(async (item) => {
+              const product = await fetchProductByID(item);
+              if (product) {
+                const image = await fetchImageByID(item);
+                return {
+                  ...product,
+                  image: image?.image, // Use the fetched image if available
+                };
+              }
+              return null;
+            })
+          );
+          const validProducts = productDetails.filter(
+            (product) => product !== null
+          ) as LandingPageProduct[];
+          setProducts(validProducts);
+        };
+        fetchProducts();
       } catch (error) {
         console.error("Error fetching products:", error);
-        setProducts(defaultProducts); // Use default products on error
       }
     }
 

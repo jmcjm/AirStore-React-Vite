@@ -10,7 +10,7 @@ import {
 import React, { useContext, useState, useEffect, ChangeEvent } from "react";
 import { useCart } from "./CartContext";
 import { NavbarContext } from "../NavbarContext";
-import { fetchProductByID, AirProducts } from "./ApiConn"; // Import the fetch function and type
+import { fetchProductByID, fetchImageByID, AirProducts } from "./ApiConn";
 import "../index.css";
 
 const CartPage: React.FC = () => {
@@ -39,7 +39,15 @@ const CartPage: React.FC = () => {
       const productDetails = await Promise.all(
         cart.map(async (item) => {
           const product = await fetchProductByID(item.id);
-          return product ? { ...product, quantity: item.quantity } : null;
+          if (product) {
+            const image = await fetchImageByID(item.id);
+            return {
+              ...product,
+              image: image?.image, // Use the fetched image if available
+              quantity: item.quantity,
+            };
+          }
+          return null;
         })
       );
       const validProducts = productDetails.filter(
