@@ -1,4 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
+// All the "div"s and "p"s would need to become Containers, Rows and Cols one day
+import { useContext, useState, useEffect } from "react";
 import { NavbarContext } from "../NavbarContext";
 import AirProductList from "./AirProductAPI";
 const AirPhonePNG = "https://rybka.ct8.pl/airphone.jpg"; // Temporary fix
@@ -10,7 +11,7 @@ interface SiteForType {
 }
 
 function DefaultProductPage({ productType }: SiteForType) {
-  const { navbarHeight, availableHeight } = useContext(NavbarContext);
+  const { availableHeight } = useContext(NavbarContext);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
 
   const backgroundImage = isMobile

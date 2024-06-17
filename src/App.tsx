@@ -1,4 +1,6 @@
 //It would be great to have animations when navigating between views TODO-future
+//Still don't have animations but with new navbar it's not so bad on mobile
+//Implementing Placeholders from bootstrap would be nice
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NavbarProvider } from "./NavbarContext";

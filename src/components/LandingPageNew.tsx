@@ -7,19 +7,6 @@ import "../index.css";
 
 function LandingPage() {
   const { availableHeight, navbarHeight } = useContext(NavbarContext);
-  const [isMobileShort, setIsMobileShort] = useState(window.innerWidth < 600);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobileShort(window.innerHeight < 600);
-    };
-
-    window.addEventListener("resize", handleResize);
-
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
 
   return (
     <Container

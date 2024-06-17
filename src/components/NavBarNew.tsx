@@ -1,5 +1,5 @@
-//this file is a kind of a monster, would need to be completely rewrite and split into different more job-oriented files
-//16.06 rewrote the main navbar into react-bootstrap but modals (forms inside them) still needs some work
+// This file is a kind of a monster, would need to be completely rewrite and split into different more job-oriented files
+// 16.06 rewrote the main navbar into react-bootstrap but modals (forms inside them) still needs some work
 import React, { useState, useContext, useRef, useEffect } from "react";
 import { Modal, Button, Toast, ToastContainer, Navbar, Nav, Container } from "react-bootstrap";
 import Logo from "../assets/Base64Logo";
@@ -23,8 +23,6 @@ const NavBar: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [toastMessage, setToastMessage] = useState("");
-  const { navbarHeight } = useContext(NavbarContext);
-  const navBarRef = useRef<HTMLDivElement>(null);
   const handleLogin = async (username: string, password: string) => {
     try {
       const response = await login(username, password);
@@ -83,18 +81,18 @@ const NavBar: React.FC = () => {
   };
 
   return (
-    //fully rewrote with react-bootstrap instead of pure bootstrap
-    <Navbar bg="dark" data-bs-theme="dark" expand="md" id="navbar">
+    // Fully rewrote with react-bootstrap instead of pure bootstrap (and now i don't now if it was worth it)
+    <Navbar bg="dark" data-bs-theme="dark" expand="md" id="navbar" collapseOnSelect>
       <Container fluid>
-        <Navbar.Brand as={Link} to="/"><Logo /> AirStore</Navbar.Brand> {/* it have to have the "as" in order to not cause full page reload*/}
+        <Navbar.Brand as={Link} to="/"><Logo /> AirStore</Navbar.Brand> {/* It have to have the "as" in order to not cause full page reload*/}
         <Navbar.Toggle aria-controls="navbar-collapse" />
         <Navbar.Collapse id="navbar-collapse" className='justify-content-end'>
           <Nav>
-            <Nav.Link as={Link} to="/airphone">AirPhone</Nav.Link>
-            <Nav.Link as={Link} to="/airtab">AirTab</Nav.Link>
-            <Nav.Link as={Link} to="/airglass">AirGlass</Nav.Link>
-            <Nav.Link as={Link} to="cart">🛒</Nav.Link>
-            <Container fluid className="m-0 p-0"> {/* buttons needs to be in a container in order to don't take up 100% width when navbar is collapsed */}
+            <Nav.Link as={Link} eventKey="1" to="/airphone">AirPhone</Nav.Link> {/* "eventKey" makes the navbar auto hides after clicking link, basically it fixes what we have broken with "as" */}
+            <Nav.Link as={Link} eventKey="1" to="/airtab">AirTab</Nav.Link> {/* Theoretically we cloud also make <Link> inside <Nav.Link> and everything should be working */}
+            <Nav.Link as={Link} eventKey="1" to="/airglass">AirGlass</Nav.Link>
+            <Nav.Link as={Link} eventKey="1" to="cart" className="me-2">🛒</Nav.Link>
+            <Container fluid className="m-0 p-0"> {/* Buttons needs to be in a container in order to don't take up 100% width when navbar is collapsed */}
               {isLoggedIn ? (
                 <Button
                   variant="outline-light"
@@ -114,7 +112,7 @@ const NavBar: React.FC = () => {
                   </Button>
                   <Button
                     variant="light"
-                    className="btn"
+                    className="px-3 "
                     onClick={() => setShowSignUpModal(true)}
                   >
                     Sign up

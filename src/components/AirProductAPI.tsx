@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "./CartContext";
 import { Row, Col, Button, Container } from "react-bootstrap/";
 import { fetchProductsByType } from "./ApiConn";
