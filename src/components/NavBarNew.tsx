@@ -1,10 +1,9 @@
 // This file is a kind of a monster, would need to be completely rewrite and split into different more job-oriented files
 // 16.06 rewrote the main navbar into react-bootstrap but modals (forms inside them) still needs some work
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Button, Toast, ToastContainer, Navbar, Nav, Container } from "react-bootstrap";
 import Logo from "../assets/Base64Logo";
-import { Link, useLocation } from "react-router-dom";
-import { NavbarContext } from "../NavbarContext";
+import { Link } from "react-router-dom";
 import { login, register } from "./ApiConn";
 import Cookies from "js-cookie";
 import "../index.css";
