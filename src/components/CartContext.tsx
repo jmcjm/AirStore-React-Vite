@@ -1,66 +1,113 @@
-//RN the cart is not kept in cookies or in any other way so after page reload it's context is gone, that's something to do in the future.
-//after connecting to the API and logging in the user, it would be useful to have a function that saves the user's cart data on the server side, in Postgres?
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
+import Cookies from "js-cookie";
 
-interface AirPhoneProduct {
+interface CartItem {
   id: number;
-  name: string;
-  price: number;
-  image: string;
-  quantity?: number; // Add optional quantity field
+  quantity: number;
 }
 
 interface CartContextType {
-  cart: AirPhoneProduct[];
-  addToCart: (product: AirPhoneProduct) => void;
+  cart: CartItem[];
+  addToCart: (productId: number) => void;
   removeFromCart: (productId: number) => void;
-  removeOneFromCart: (productId: number) => void; // New function
+  removeOneFromCart: (productId: number) => void;
 }
 
 interface CartProviderProps {
-  children: ReactNode; // Typ dla children
+  children: ReactNode;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<AirPhoneProduct[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cartLoaded, setCartLoaded] = useState<boolean>(false);
 
-  const addToCart = (product: AirPhoneProduct) => {
+  useEffect(() => {
+    if (!cartLoaded) {
+      setCartLoaded(true);
+      // Load cart from cookies when component mounts
+      const savedCart = Cookies.get("cart");
+      console.log("Attempting to load cart from cookies:", savedCart);
+      if (savedCart) {
+        const parsedCart = JSON.parse(savedCart);
+        console.log("Cart loaded from cookies:", parsedCart);
+        setCart(parsedCart);
+      }
+    }
+  }, [cartLoaded]);
+
+  useEffect(() => {
+    if (cartLoaded) {
+      // Save cart to cookies whenever it changes
+      console.log("Cart saved to cookies:", cart);
+      Cookies.set("cart", JSON.stringify(cart), {
+        expires: 7,
+        sameSite: "Lax",
+      });
+    }
+  }, [cart, cartLoaded]);
+
+  const addToCart = (productId: number) => {
     setCart((prevCart) => {
-      const existingProduct = prevCart.find((item) => item.id === product.id);
+      const existingProduct = prevCart.find((item) => item.id === productId);
       if (existingProduct) {
-        return prevCart.map((item) =>
-          item.id === product.id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
+        const updatedCart = prevCart.map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
         );
+        console.log("Product quantity updated:", updatedCart);
+        return updatedCart;
       } else {
-        return [...prevCart, { ...product, quantity: 1 }];
+        const newCart = [...prevCart, { id: productId, quantity: 1 }];
+        console.log("Product added to cart:", newCart);
+        return newCart;
       }
     });
   };
 
   const removeFromCart = (productId: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+    setCart((prevCart) => {
+      const updatedCart = prevCart.filter((item) => item.id !== productId);
+      console.log("Product removed from cart:", updatedCart);
+      return updatedCart;
+    });
   };
 
   const removeOneFromCart = (productId: number) => {
     setCart((prevCart) => {
       const product = prevCart.find((item) => item.id === productId);
-      if (product) {
-        if (product.quantity && product.quantity > 1) {
-          return prevCart.map((item) =>
-            item.id === productId ? { ...item, quantity: item.quantity! - 1 } : item
-          );
-        } else {
-          return prevCart.filter((item) => item.id !== productId);
-        }
+      if (product && product.quantity > 1) {
+        const updatedCart = prevCart.map((item) =>
+          item.id === productId
+            ? { ...item, quantity: item.quantity - 1 }
+            : item
+        );
+        console.log("Product quantity decreased:", updatedCart);
+        return updatedCart;
       }
-      return prevCart;
+      const newCart = prevCart.filter((item) => item.id !== productId);
+      console.log("Product removed from cart as quantity is 0:", newCart);
+      return newCart;
     });
   };
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, removeOneFromCart }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeFromCart,
+        removeOneFromCart,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

@@ -1,14 +1,15 @@
 //It would be great to have animations when navigating between views TODO-future
+//Still don't have animations but with new navbar it's not so bad on mobile
+//Implementing Placeholders from bootstrap would be nice
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { NavbarProvider } from "./NavbarContext";
-import AirPhone from "./components/AirPhone";
-import AirTab from "./components/AirTab";
+import DefaultProductPage from "./components/DefaultProductPage";
 import AirGlass from "./components/AirGlass";
-import LandingPage from "./components/LandingPage";
-import CartPage from "./components/CartPage";
+import LandingPage from "./components/LandingPageNew";
+import CartPageNew from "./components/CartPageNew";
 import { CartProvider } from "./components/CartContext";
-import NavBar from "./components/NavBar";
+import NavBar from "./components/NavBarNew";
 
 const App: React.FC = () => {
   return (
@@ -16,15 +17,13 @@ const App: React.FC = () => {
       <NavbarProvider>
         <CartProvider>
           <NavBar />
-          <div>
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route path="/airphone" element={<AirPhone />} />
-              <Route path="/airtab" element={<AirTab />} />
+              <Route path="/airphone" element={<DefaultProductPage productType={1} />} />
+              <Route path="/airtab" element={<DefaultProductPage productType={2} />} />
               <Route path="/airglass" element={<AirGlass />} />
-              <Route path="/cart" element={<CartPage />} />
+              <Route path="/cart" element={<CartPageNew />} />
             </Routes>
-          </div>
         </CartProvider>
       </NavbarProvider>
     </Router>

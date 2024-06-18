@@ -1,15 +1,22 @@
-//broken as f at certain screen ratios (width below 1000px), AirTab is looking better in those situations
-import React, { useContext, useState, useEffect } from "react";
+// All the "div"s and "p"s would need to become Containers, Rows and Cols one day
+import { useContext, useState, useEffect } from "react";
 import { NavbarContext } from "../NavbarContext";
-import AirPhoneProductList from "./AirPhoneAPI";
-import AirPhonePNG from "../assets/airphone.png";
+import AirProductList from "./AirProductAPI";
+const AirPhonePNG = "https://rybka.ct8.pl/airphone.jpg"; // Temporary fix
+const AirTabPNG = "https://rybka.ct8.pl/AirTabs.jpg";
 import "../index.css";
 
-function AirPhone() {
-  const { navbarHeight, availableHeight } = useContext(NavbarContext);
+interface SiteForType {
+  productType: 1 | 2;
+}
 
-  //Dynamiczne przypisywanie klas Bootstrapa
+function DefaultProductPage({ productType }: SiteForType) {
+  const { availableHeight } = useContext(NavbarContext);
   const [isMobile, setIsMobile] = useState(window.innerWidth < 1000);
+
+  const backgroundImage = isMobile
+    ? "linear-gradient(0deg, #696969, #060606, black)"
+    : "linear-gradient(90deg, #7d7d7d, #060606, black)";
 
   useEffect(() => {
     const handleResize = () => {
@@ -23,13 +30,18 @@ function AirPhone() {
     };
   }, []);
 
+  const headerText = productType === 1 ? "AirPhone" : "AirTab";
+  const mottoText =
+    productType === 1 ? "Innovation in your pocket" : "Creativity for everyone";
+  const backgroundImageURL = productType === 1 ? AirPhonePNG : AirTabPNG;
+
   return (
     <div
       className={`bg-image text-light d-flex ${
         isMobile ? "flex-column" : "flex-row-reverse"
       }`}
       style={{
-        backgroundImage: "linear-gradient(90deg, #7d7d7d, #060606, black)",
+        backgroundImage: backgroundImage,
         minHeight: `${availableHeight}px`,
         position: "sticky",
         width: "100%",
@@ -42,14 +54,15 @@ function AirPhone() {
           isMobile ? "vh-100" : "col-5"
         }`}
         style={{
-          backgroundImage: `url(${AirPhonePNG})`,
+          backgroundImage: `url(${backgroundImageURL})`,
           backgroundSize: "cover",
+          backgroundPosition: "center",
           height: "auto",
         }}
       >
-        <p className="header-text">AirPhone</p>
+        <p className="header-text">{headerText}</p>
         <div>
-          <p>Innovation in your pocket</p>
+          <p>{mottoText}</p>
         </div>
       </div>
       <div
@@ -57,10 +70,10 @@ function AirPhone() {
           isMobile ? "align-items-center" : "col-7 align-items-start"
         }`}
       >
-        <AirPhoneProductList />
+        <AirProductList productType={productType} />
       </div>
     </div>
   );
 }
 
-export default AirPhone;
+export default DefaultProductPage;
