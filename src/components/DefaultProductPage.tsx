@@ -3,7 +3,7 @@ import { useContext, useState, useEffect } from "react";
 import { NavbarContext } from "../NavbarContext";
 import AirProductList from "./AirProductAPI";
 const AirPhonePNG = "https://rybka.ct8.pl/airphone.jpg"; // Temporary fix
-const AirTabPNG = "https://rybka.ct8.pl/airtab.jpg"; 
+const AirTabPNG = "https://rybka.ct8.pl/AirTabs.jpg";
 import "../index.css";
 
 interface SiteForType {
@@ -31,7 +31,8 @@ function DefaultProductPage({ productType }: SiteForType) {
   }, []);
 
   const headerText = productType === 1 ? "AirPhone" : "AirTab";
-  const mottoText = productType === 1 ? "Innovation in your pocket" : "Creativity for everyone";
+  const mottoText =
+    productType === 1 ? "Innovation in your pocket" : "Creativity for everyone";
   const backgroundImageURL = productType === 1 ? AirPhonePNG : AirTabPNG;
 
   return (
@@ -69,7 +70,7 @@ function DefaultProductPage({ productType }: SiteForType) {
           isMobile ? "align-items-center" : "col-7 align-items-start"
         }`}
       >
-        <AirProductList productType = {productType} />
+        <AirProductList productType={productType} />
       </div>
     </div>
   );

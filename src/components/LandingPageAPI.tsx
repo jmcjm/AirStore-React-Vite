@@ -20,7 +20,7 @@ const LandingPageProductList: React.FC = () => {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const productIds = [5, 7, 9];
+        const productIds = [5, 13, 9];
 
         const fetchProducts = async () => {
           const productDetails = await Promise.all(
