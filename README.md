@@ -1,5 +1,5 @@
 # AirStore
-This is a frontend for AirShop project for university. It's written in React with Vite and Bootstrap.
+Frontend for AirStore. Written in React with Vite and Bootstrap.
 # TODO:
 - [x] ~~AirGlass (everything) :snail:~~ (will be incorporated into DefaultProductPage) 
 - [x] ~~DefaultProductPage (AirTab + AirPhone) :exclamation:~~
